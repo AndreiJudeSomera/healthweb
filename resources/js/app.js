@@ -1,9 +1,13 @@
 import "./bootstrap";
 import Alpine from "alpinejs";
 import $ from "jquery";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css"; // important for styling
 
 window.$ = window.jQuery = $;
 window.Alpine = Alpine;
+window.toastr = toastr; // ✅ make it global
+
 Alpine.start();
 
 toastr.options = {

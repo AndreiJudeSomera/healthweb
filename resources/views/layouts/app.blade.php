@@ -15,6 +15,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> -->
+
 
   <script>
 window.authUserId = {{ auth()->id() ?? 'null' }};
@@ -27,7 +29,7 @@ window.authUserId = {{ auth()->id() ?? 'null' }};
   <!-- Imports ni Garic -->
   <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
   {{-- @vite(["resources/js/app.js"]) --}}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
   <link rel="icon" href="{{ asset("favicon.ico") }}" type="image/x-icon" />
 
   <!-- jQuery (only one version) -->
