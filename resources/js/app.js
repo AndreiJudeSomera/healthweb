@@ -23,3 +23,6 @@ toastr.options = {
   showMethod: "fadeIn",
   hideMethod: "fadeOut",
 };
+
+// ✅ AUTO-IMPORT EVERYTHING
+import.meta.glob('./components/**/*.js', { eager: true });

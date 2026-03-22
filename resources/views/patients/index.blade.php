@@ -56,6 +56,6 @@
   @include("patients.delete-patient-modal")
 @endsection
 @push("scripts")
-  @vite(["resources/js/pages/patients-index.js"])
+  @vite(["resources/js/components/pages/patients-index.js"])
   @vite(["resources/js/components/modals/bind-patient-modal.js"])
 @endpush
