@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <script>
-window.authUserId = {{ auth()->id() }};
+window.authUserId = {{ auth()->id() ?? 'null' }};
 </script>
 
 @vite(['resources/js/app.js'])
@@ -171,6 +171,7 @@ window.authUserId = {{ auth()->id() }};
   let sideBarOpen = true;
   const sidebar = document.getElementById("sideBar");
   const sidebarTrigger = document.getElementById("sidebarTrigger");
+  if (sidebarTrigger) {
   sidebarTrigger.addEventListener("click", (e) => {
     if (sideBarOpen) {
       sideBarOpen = false;
@@ -181,7 +182,7 @@ window.authUserId = {{ auth()->id() }};
       sidebar.classList.remove('w-0');
       sidebar.classList.add('w-[300px]');
     }
-  });
+  })};
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>

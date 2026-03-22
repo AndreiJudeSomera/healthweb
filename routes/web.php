@@ -156,7 +156,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
 // });
 
 
-
+  Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -184,7 +184,7 @@ Route::middleware(['auth', 'role:1,2'])->group(function () {
 
   });
   // Patients: management
-  Route::get('/patients', [PatientController::class, 'index'])->name('patients.index');
+
   Route::get('/patients/records', [PatientRecordController::class, 'index'])->name('patients.records');
   Route::get('/patients/search', [PatientRecordController::class, 'search'])->name('patients.search');
   Route::post('/patients', [PatientRecordController::class, 'store'])->name('patients.store');
