@@ -1,7 +1,52 @@
 {
-  "_modal-yXBa-zKx.js": {
-    "file": "assets/modal-yXBa-zKx.js",
+  "_buttons.print-BOdnS0cH.js": {
+    "file": "assets/buttons.print-BOdnS0cH.js",
+    "name": "buttons.print",
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.buttons-jraGuKUr.js"
+    ]
+  },
+  "_create-consultation-document-modal-C7Sg7G6q.js": {
+    "file": "assets/create-consultation-document-modal-C7Sg7G6q.js",
+    "name": "create-consultation-document-modal"
+  },
+  "_dataTables-VhwuzOF9.js": {
+    "file": "assets/dataTables-VhwuzOF9.js",
+    "name": "dataTables"
+  },
+  "_dataTables.buttons-jraGuKUr.js": {
+    "file": "assets/dataTables.buttons-jraGuKUr.js",
+    "name": "dataTables.buttons",
+    "imports": [
+      "_dataTables-VhwuzOF9.js"
+    ]
+  },
+  "_dataTables.responsive-DsWgpjkp.js": {
+    "file": "assets/dataTables.responsive-DsWgpjkp.js",
+    "name": "dataTables.responsive",
+    "imports": [
+      "_dataTables-VhwuzOF9.js"
+    ]
+  },
+  "_edit-appointment-modal-BJO8zgPV.js": {
+    "file": "assets/edit-appointment-modal-BJO8zgPV.js",
+    "name": "edit-appointment-modal"
+  },
+  "_edit-document-modal-At-Yt1lK.js": {
+    "file": "assets/edit-document-modal-At-Yt1lK.js",
+    "name": "edit-document-modal",
+    "imports": [
+      "resources/js/components/modals/delete-document-modal.js"
+    ]
+  },
+  "_modal-MwHSR4zk.js": {
+    "file": "assets/modal-MwHSR4zk.js",
     "name": "modal"
+  },
+  "_view-appointment-modal-DBPOqfgX.js": {
+    "file": "assets/view-appointment-modal-DBPOqfgX.js",
+    "name": "view-appointment-modal"
   },
   "resources/css/app.css": {
     "file": "assets/app-henafXcq.css",
@@ -9,12 +54,19 @@
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CCyQBGRo.js",
+    "file": "assets/app-BaocyfKw.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_modal-yXBa-zKx.js"
+      "resources/js/components/modals/delete-document-modal.js",
+      "_edit-appointment-modal-BJO8zgPV.js",
+      "_modal-MwHSR4zk.js",
+      "_dataTables-VhwuzOF9.js",
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_view-appointment-modal-DBPOqfgX.js"
     ]
   },
   "resources/js/components/modals/bind-patient-modal.js": {
@@ -23,13 +75,263 @@
     "src": "resources/js/components/modals/bind-patient-modal.js",
     "isEntry": true
   },
+  "resources/js/components/modals/delete-appointment-modal.js": {
+    "file": "assets/delete-appointment-modal-l0sNRNKZ.js",
+    "name": "delete-appointment-modal",
+    "src": "resources/js/components/modals/delete-appointment-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/delete-document-modal.js": {
+    "file": "assets/delete-document-modal-ZR-lq8fj.js",
+    "name": "delete-document-modal",
+    "src": "resources/js/components/modals/delete-document-modal.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_modal-MwHSR4zk.js",
+      "_view-appointment-modal-DBPOqfgX.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
+    ]
+  },
+  "resources/js/components/modals/delete-patient-modal.js": {
+    "file": "assets/delete-patient-modal-l0sNRNKZ.js",
+    "name": "delete-patient-modal",
+    "src": "resources/js/components/modals/delete-patient-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/edit-appointment-modal.js": {
+    "file": "assets/edit-appointment-modal-1Sid7PMi.js",
+    "name": "edit-appointment-modal",
+    "src": "resources/js/components/modals/edit-appointment-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/edit-document-modal-sec.js": {
+    "file": "assets/edit-document-modal-sec-l0sNRNKZ.js",
+    "name": "edit-document-modal-sec",
+    "src": "resources/js/components/modals/edit-document-modal-sec.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/edit-document-modal.js": {
+    "file": "assets/edit-document-modal-l0sNRNKZ.js",
+    "name": "edit-document-modal",
+    "src": "resources/js/components/modals/edit-document-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/edit-patient-modal.js": {
+    "file": "assets/edit-patient-modal-l0sNRNKZ.js",
+    "name": "edit-patient-modal",
+    "src": "resources/js/components/modals/edit-patient-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/generate-document-modal.js": {
+    "file": "assets/generate-document-modal-l0sNRNKZ.js",
+    "name": "generate-document-modal",
+    "src": "resources/js/components/modals/generate-document-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/modal.js": {
+    "file": "assets/modal-g1CRjK_C.js",
+    "name": "modal",
+    "src": "resources/js/components/modals/modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/view-appointment-modal.js": {
+    "file": "assets/view-appointment-modal-l0sNRNKZ.js",
+    "name": "view-appointment-modal",
+    "src": "resources/js/components/modals/view-appointment-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/modals/view-patient-modal.js": {
+    "file": "assets/view-patient-modal-l0sNRNKZ.js",
+    "name": "view-patient-modal",
+    "src": "resources/js/components/modals/view-patient-modal.js",
+    "isEntry": true
+  },
+  "resources/js/components/patients/patients-table.js": {
+    "file": "assets/patients-table-l0sNRNKZ.js",
+    "name": "patients-table",
+    "src": "resources/js/components/patients/patients-table.js",
+    "isEntry": true
+  },
+  "resources/js/pages/accounts-table.js": {
+    "file": "assets/accounts-table-CNFph47g.js",
+    "name": "accounts-table",
+    "src": "resources/js/pages/accounts-table.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_modal-MwHSR4zk.js"
+    ]
+  },
+  "resources/js/pages/appointment-all-create.js": {
+    "file": "assets/appointment-all-create-oPCHOzlT.js",
+    "name": "appointment-all-create",
+    "src": "resources/js/pages/appointment-all-create.js",
+    "isEntry": true
+  },
+  "resources/js/pages/appointment-create.js": {
+    "file": "assets/appointment-create-BYPUBAG_.js",
+    "name": "appointment-create",
+    "src": "resources/js/pages/appointment-create.js",
+    "isEntry": true
+  },
+  "resources/js/pages/appointment-queue.js": {
+    "file": "assets/appointment-queue-B3c8Ms7g.js",
+    "name": "appointment-queue",
+    "src": "resources/js/pages/appointment-queue.js",
+    "isEntry": true,
+    "imports": [
+      "_modal-MwHSR4zk.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
+    ]
+  },
+  "resources/js/pages/appointment-slots.js": {
+    "file": "assets/appointment-slots-DJiofwte.js",
+    "name": "appointment-slots",
+    "src": "resources/js/pages/appointment-slots.js",
+    "isEntry": true
+  },
+  "resources/js/pages/appointment-table.js": {
+    "file": "assets/appointment-table-NvKsQsZ1.js",
+    "name": "appointment-table",
+    "src": "resources/js/pages/appointment-table.js",
+    "isEntry": true,
+    "imports": [
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_modal-MwHSR4zk.js",
+      "_view-appointment-modal-DBPOqfgX.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
+    ]
+  },
+  "resources/js/pages/audit-index.js": {
+    "file": "assets/audit-index-nbGwn-og.js",
+    "name": "audit-index",
+    "src": "resources/js/pages/audit-index.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_modal-MwHSR4zk.js"
+    ]
+  },
+  "resources/js/pages/backup-patients-index.js": {
+    "file": "assets/backup-patients-index-BEeCb6IY.js",
+    "name": "backup-patients-index",
+    "src": "resources/js/pages/backup-patients-index.js",
+    "isEntry": true,
+    "imports": [
+      "_modal-MwHSR4zk.js"
+    ]
+  },
+  "resources/js/pages/patient-documents-index.js": {
+    "file": "assets/patient-documents-index-BR7DfI5g.js",
+    "name": "patient-documents-index",
+    "src": "resources/js/pages/patient-documents-index.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "resources/js/components/modals/delete-document-modal.js",
+      "_edit-document-modal-At-Yt1lK.js",
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_modal-MwHSR4zk.js",
+      "_view-appointment-modal-DBPOqfgX.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
+    ]
+  },
+  "resources/js/pages/patient-documents-table.js": {
+    "file": "assets/patient-documents-table-BNnctvDD.js",
+    "name": "patient-documents-table",
+    "src": "resources/js/pages/patient-documents-table.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "resources/js/components/modals/delete-document-modal.js",
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_modal-MwHSR4zk.js",
+      "_view-appointment-modal-DBPOqfgX.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
+    ]
+  },
+  "resources/js/pages/patient-show-index.js": {
+    "file": "assets/patient-show-index-CwjIuSoP.js",
+    "name": "patient-show-index",
+    "src": "resources/js/pages/patient-show-index.js",
+    "isEntry": true,
+    "imports": [
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_modal-MwHSR4zk.js",
+      "_view-appointment-modal-DBPOqfgX.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
+    ]
+  },
   "resources/js/pages/patients-index.js": {
-    "file": "assets/patients-index-DZJROXnL.js",
+    "file": "assets/patients-index-lbe9Hwwd.js",
     "name": "patients-index",
     "src": "resources/js/pages/patients-index.js",
     "isEntry": true,
     "imports": [
-      "_modal-yXBa-zKx.js"
+      "_buttons.print-BOdnS0cH.js",
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_modal-MwHSR4zk.js"
+    ]
+  },
+  "resources/js/patient-screen/appointments/appointment-cancel.js": {
+    "file": "assets/appointment-cancel-nIFARVsK.js",
+    "name": "appointment-cancel",
+    "src": "resources/js/patient-screen/appointments/appointment-cancel.js",
+    "isEntry": true
+  },
+  "resources/js/patient-screen/appointments/appointment-table.js": {
+    "file": "assets/appointment-table-PYV3erbv.js",
+    "name": "appointment-table",
+    "src": "resources/js/patient-screen/appointments/appointment-table.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.responsive-DsWgpjkp.js"
+    ]
+  },
+  "resources/js/refactored/patient-documents-sec.js": {
+    "file": "assets/patient-documents-sec-Cwu2N7_-.js",
+    "name": "patient-documents-sec",
+    "src": "resources/js/refactored/patient-documents-sec.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_create-consultation-document-modal-C7Sg7G6q.js"
+    ]
+  },
+  "resources/js/refactored/patient-documents.js": {
+    "file": "assets/patient-documents-C2s7kq03.js",
+    "name": "patient-documents",
+    "src": "resources/js/refactored/patient-documents.js",
+    "isEntry": true,
+    "imports": [
+      "_dataTables-VhwuzOF9.js",
+      "_dataTables.buttons-jraGuKUr.js",
+      "_dataTables.responsive-DsWgpjkp.js",
+      "_edit-document-modal-At-Yt1lK.js",
+      "_create-consultation-document-modal-C7Sg7G6q.js",
+      "resources/js/components/modals/delete-document-modal.js",
+      "_buttons.print-BOdnS0cH.js",
+      "_modal-MwHSR4zk.js",
+      "_view-appointment-modal-DBPOqfgX.js",
+      "_edit-appointment-modal-BJO8zgPV.js"
     ]
   }
 }
