@@ -1,13 +1,35 @@
 {
+  "_modal-yXBa-zKx.js": {
+    "file": "assets/modal-yXBa-zKx.js",
+    "name": "modal"
+  },
   "resources/css/app.css": {
     "file": "assets/app-henafXcq.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-YbyuC2aL.js",
+    "file": "assets/app-CCyQBGRo.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_modal-yXBa-zKx.js"
+    ]
+  },
+  "resources/js/components/modals/bind-patient-modal.js": {
+    "file": "assets/bind-patient-modal-Ouf4QMpd.js",
+    "name": "bind-patient-modal",
+    "src": "resources/js/components/modals/bind-patient-modal.js",
     "isEntry": true
+  },
+  "resources/js/pages/patients-index.js": {
+    "file": "assets/patients-index-DZJROXnL.js",
+    "name": "patients-index",
+    "src": "resources/js/pages/patients-index.js",
+    "isEntry": true,
+    "imports": [
+      "_modal-yXBa-zKx.js"
+    ]
   }
 }
