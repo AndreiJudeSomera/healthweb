@@ -33,14 +33,14 @@ class AuditLog extends Model {
     $time = $this->created_at->format('g:i A');
 
     return match ($this->action) {
-      'patient_record.create'       => "{$role} {$name} {$pidText} added his/her own record on {$date} at {$time}",
-      'patient_record.create_staff' => "{$role} {$name} added a patient record{$pidText} on {$date} at {$time}",
-      'patient_record.update'       => "{$role} {$name} updated a patient record{$pidText} on {$date} at {$time}",
-      'patient_record.bind'         => "{$role} {$name} linked to existing patient record{$pidText} on {$date} at {$time}",
-      'patient.bind_user'           => "{$role} {$name} linked user account to patient record on {$date} at {$time}",
-      'appointment_created'         => "{$role} {$name} created an appointment on {$date} at {$time}",
-      'appointment_updated'         => "{$role} {$name} updated an appointment on {$date} at {$time}",
-      default                       => "{$role} {$name} performed '{$this->action}' on {$date} at {$time}",
+      'patient_record.create'       => "{$name} {$pidText} added his/her own record on {$date} at {$time}",
+      'patient_record.create_staff' => "{$name} added a patient record{$pidText} on {$date} at {$time}",
+      'patient_record.update'       => "{$name} updated a patient record{$pidText} on {$date} at {$time}",
+      'patient_record.bind'         => "{$name} linked to existing patient record{$pidText} on {$date} at {$time}",
+      'patient.bind_user'           => "{$name} linked user account to patient record on {$date} at {$time}",
+      'appointment_created'         => "{$name} created an appointment on {$date} at {$time}",
+      'appointment_updated'         => "{$name} updated an appointment on {$date} at {$time}",
+      default                       => "{$name} performed '{$this->action}' on {$date} at {$time}",
     };
   }
 }

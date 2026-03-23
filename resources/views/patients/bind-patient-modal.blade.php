@@ -7,13 +7,14 @@
   <form id="patient_bind_record" method="POST" action="">
     <div class="w-full flex flex-col gap-2 text-blue-950">
       <div class="flex flex-col gap-1">
-        <label class="font-medium" for="pid">Old Patient Record</label>
+        <label class="font-medium" for="pid">Existing Patient Record</label>
         <select class="w-full border-2 border-blue-950 rounded-md p-2" id="bind_record" name="record_id">
           <option default disabled>Select Record</option>
         </select>
       </div>
       <div class="flex flex-col gap-1">
-        <label class="font-medium" for="user">New User</label>
+        <label class="font-medium" for="user">Old Patient <span class="text-xs text-gray-500 mt-1"> ( User that has existing records in the clinic)</span>
+         </label>
         <select class="w-full border-2 border-blue-950 rounded-md p-2" id="bind_user" name="id">
           <option value="" disabled selected>Select User</option>
         </select>

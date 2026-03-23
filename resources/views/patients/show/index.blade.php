@@ -223,8 +223,10 @@
   @vite(["resources/js/components/modals/modal.js"])
 
   <script>
+    
     window.currentUserRole = {{ auth()->user()->role ?? 0 }};  ✅ RIGHT HERE!
     initDocumentsTable('{{ $patient->id }}');
   </script>
+
 
 @endpush

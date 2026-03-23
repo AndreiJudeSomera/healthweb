@@ -27,6 +27,7 @@ window.authUserId = {{ auth()->id() ?? 'null' }};
   <!-- Imports ni Garic -->
   <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
   {{-- @vite(["resources/js/app.js"]) --}}
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <link rel="icon" href="{{ asset("favicon.ico") }}" type="image/x-icon" />
 
@@ -186,7 +187,7 @@ window.authUserId = {{ auth()->id() ?? 'null' }};
     }
   })};
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
   toastr.options = {
     closeButton: true,

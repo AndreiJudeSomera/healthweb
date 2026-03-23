@@ -44,13 +44,17 @@ const auditTable = new DataTable("#auditLogsTable", {
       ths[ths.length - 1].classList.add("rounded-tr-md");
     }
   },
+ 
   columns: [
-    {
+     {
       data: null,
       title: "#",
       orderable: false,
       searchable: false,
-      render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1,
+    className: "text-center bg-gray-100 rounded-tl-md",
+  render: (data, type, row, meta) => `
+  <div >${meta.row + meta.settings._iDisplayStart + 1}</div>
+`,
     },
     {
       data: "created_at",
@@ -93,11 +97,13 @@ const auditTable = new DataTable("#auditLogsTable", {
       .nodes()
       .each((cell, i) => {
         cell.innerHTML = `
-        <div class="flex items-center justify-end h-full mx-1 my-1">
+        <div class="flex items-center justify-end h-full mx-3 my-2 ">
           ${i + 1}
         </div>
       `;
       });
+  }, rowCallback: function(row, data, index) {
+    $(row).addClass('border-b border-blue-200 last:border-b-0');
   },
 });
 

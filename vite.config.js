@@ -40,12 +40,13 @@ export default defineConfig({
             ],
             refresh: true, // Live reload for development
         }),
-    ],
+    ]
+    ,
     server: {
         host: '0.0.0.0', // Dev server binds to all IPs
         port: 4000,
     },
     build: {
         outDir: 'public/build', // Production build folder
-    },
+    },//comment this when in dev mode , uncomment if in build
 });

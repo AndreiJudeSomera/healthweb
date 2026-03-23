@@ -1,4 +1,4 @@
-<x-modal-garic id="create-consultation" title="Create Consultation" maxWidth="max-w-[750px]">
+<x-modal-garic id="create-consultation"  title="Create Consultation" maxWidth="max-w-[750px]">
   @php
     $form_items = [
         "consultation_date" => [
@@ -319,6 +319,9 @@
           // ✅ success
           const data = await res.json().catch(() => ({}));
           toastr.success("Consultation created!");
+            document
+            .querySelector('[data-modal-close="create-consultation-form"]')
+            ?.click();
           window.refreshDocumentsTable?.();
 
           // reset form UI

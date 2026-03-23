@@ -67,24 +67,26 @@ document.addEventListener("DOMContentLoaded", function () {
     columnDefs: [
       {
         targets: -1,
-        className: "flex justify-center",
+        className: "flex justify-end",
         width: 10,
       },
       {
         targets: 0,
         width: 10,
-        className: "text-center flex justify-center w-10 h-[2.35em]",
+        className: "text-center flex justify-end w-10 ",
       },
     ],
     columns: [
-      {
-        data: null,
-        title: "#",
-        className: "rounded-tl-md text-center",
-        orderable: false,
-        searchable: false,
-        render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1,
-      },
+        {
+      data: null,
+      title: "#",
+      orderable: false,
+      searchable: false,
+    className: "text-center bg-gray-100 rounded-tl-md",
+  render: (data, type, row, meta) => `
+  <div>${meta.row + meta.settings._iDisplayStart + 1}</div>
+`,
+    },
      {
     data: "document_type",
     title: `<div class="ml-5">Record Type</div>`,
@@ -158,6 +160,20 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     ],
     
+   drawCallback: function () {
+    this.api()
+      .column(0, { search: "applied", order: "applied" })
+      .nodes()
+      .each((cell, i) => {
+        cell.innerHTML = `
+        <div class="flex items-center justify-end h-full mx-1 my-1 ">
+          ${i + 1}
+        </div>
+      `;
+      });
+  }, rowCallback: function(row, data, index) {
+    $(row).addClass('border-b border-blue-200 last:border-b-0');
+  },
   });
 
   document

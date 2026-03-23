@@ -29,4 +29,4 @@ toastr.options = {
 };
 
 // ✅ AUTO-IMPORT EVERYTHING
-import.meta.glob('./components/**/*.js', { eager: true });
+// import.meta.glob('./components/**/*.js', { eager: true });
