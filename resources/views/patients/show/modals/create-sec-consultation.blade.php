@@ -285,13 +285,13 @@
           Object.keys(this.form).forEach((k) => (this.form[k] = ""));
 
           // ✅ refresh DataTables
-          if (window.documentsTable) {
-            // if using ajax source:
-            documentsTable.ajax.reload(null, false); // false = keep current page
-            // if NOT ajax source (server-rendered rows), then you need to refetch HTML instead
-          } else {
-            console.warn("documentsTable not found on window.");
-          }
+          // if (window.documentsTable) {
+          //   // if using ajax source:
+          //   documentsTable.ajax.reload(null, false); // false = keep current page
+          //   // if NOT ajax source (server-rendered rows), then you need to refetch HTML instead
+          // } else {
+          //   console.warn("documentsTable not found on window.");
+          // }
 
           // optional: close modal
           document

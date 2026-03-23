@@ -117,7 +117,7 @@
   </div>
   <div class="mt-6 flex justify-end gap-2">
     <button class="px-6 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-600/90"
-      data-modal-close="create-consultation">
+      data-modal-close="create-consultation-form">
       Cancel
     </button>
     <button class="px-6 py-2 bg-blue-950 text-blue-100 rounded-md hover:bg-blue-950/90" type="submit"
@@ -330,14 +330,14 @@
           // reset alpine model (optional)
           Object.keys(this.form).forEach((k) => (this.form[k] = ""));
 
-          // ✅ refresh DataTables
-          if (window.documentsTable) {
-            // if using ajax source:
-            documentsTable.ajax.reload(null, false); // false = keep current page
-            // if NOT ajax source (server-rendered rows), then you need to refetch HTML instead
-          } else {
-            console.warn("documentsTable not found on window.");
-          }
+          // // ✅ refresh DataTables
+          // if (window.documentsTable) {
+          //   // if using ajax source:
+          //   documentsTable.ajax.reload(null, false); // false = keep current page
+          //   // if NOT ajax source (server-rendered rows), then you need to refetch HTML instead
+          // } else {
+          //   console.warn("documentsTable not found on window.");
+          // }
 
           // optional: close modal
         document

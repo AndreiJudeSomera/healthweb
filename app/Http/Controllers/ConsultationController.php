@@ -142,7 +142,7 @@ class ConsultationController extends Controller {
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'patient_pid' => ['nullable', 'exists:patient_records,pid'],
+            'patient_pid' => ['required', 'exists:patient_records,pid'],
             'appointment_id' => ['nullable', 'exists:appointments,id'],
             'linked_consultation_id' => ['nullable', 'exists:consultations,id'],
 
@@ -302,7 +302,7 @@ public function update(Request $request, int $id)
     $user = Auth::user();
 
     if ($user->role == 2) {
-        $doctorId = $user->clinicstaff->doctor->user_id ?? null;
+      $doctorId = $user->clinicstaff?->doctor?->user_id;
         $validated['doctor_id'] = $doctorId;
     }
 
