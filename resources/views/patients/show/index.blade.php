@@ -218,15 +218,17 @@
   </div>
 @endsection
 @push("scripts")
+@php
+  $role = auth()->user()->role ?? null;
+@endphp
+
+@if($role == 2)
   @vite(["resources/js/refactored/patient-documents.js"])
+@elseif($role == 1)
   @vite(["resources/js/refactored/patient-documents-sec.js"])
+@endif
   @vite(["resources/js/components/modals/modal.js"])
 
-  <script>
-    
-    window.currentUserRole = {{ auth()->user()->role ?? 0 }};  ✅ RIGHT HERE!
-    initDocumentsTable('{{ $patient->id }}');
-  </script>
-
+  
 
 @endpush

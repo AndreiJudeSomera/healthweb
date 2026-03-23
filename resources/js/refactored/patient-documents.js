@@ -13,7 +13,7 @@ const TYPE_LABELS = {
 };
 
 function typeBadge(type) {
-  const t = TYPE_LABELS[type] ?? { label: type ?? "—", cls: "bg-gray-100 text-gray-700" };
+  const t = TYPE_LABELS[type] ?? { label: type ?? "-", cls: "bg-gray-100 text-gray-700" };
   return `<span class="px-2 py-0.5 rounded text-xs font-semibold ${t.cls}">${t.label}</span>`;
 }
 
@@ -30,7 +30,7 @@ function formatDate(dateStr) {
 
 function truncate(str, len = 40) {
   if (!str) return "—";
-  return str.length > len ? str.slice(0, len) + "…" : str;
+  return str.length > len ? str.slice(0, len) + "..." : str;
 }
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -61,7 +61,7 @@
       <img class="w-[200px] -my-12" src="{{ asset("assets/images/logo2.png") }}" alt="Logo">
       <h1 class="font-semibold text-xl">CONSULTATION FORM</h1>
     </div>
-    <form class="flex flex-col gap-4" id="create-consultation-form" action="" x-data="consultationForm(@js($patient->pid))"
+    <form class="flex flex-col gap-4" id="create-consultation-form" action="" x-data="consultationForm(@js($patient->pid ?? ''))"
       @submit.prevent="submit($event)" novalidate>
       @csrf
       <input name="patient_pid" value="{{ $patient->pid }}" hidden readonly>
@@ -129,6 +129,7 @@
 </x-modal-garic>
 
 <script>
+  
   document.addEventListener("alpine:init", () => {
     Alpine.data("consultationForm", (pid) => ({
       form: {
@@ -319,9 +320,6 @@
           // ✅ success
           const data = await res.json().catch(() => ({}));
           toastr.success("Consultation created!");
-            document
-            .querySelector('[data-modal-close="create-consultation-form"]')
-            ?.click();
           window.refreshDocumentsTable?.();
 
           // reset form UI
@@ -342,9 +340,9 @@
           }
 
           // optional: close modal
-          document
-            .querySelector('[data-modal-close="create-consultation"]')
-            ?.click();
+        document
+        .querySelector('[data-modal-close="create-consultation"]')
+        ?.click();
 
         } catch (err) {
           console.error("Network error:", err);

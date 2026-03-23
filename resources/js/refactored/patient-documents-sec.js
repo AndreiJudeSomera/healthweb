@@ -2,7 +2,6 @@ import DataTable from "datatables.net-buttons-dt";
 import responsive from "datatables.net-responsive-dt";
 import { editDocumentModalInit } from "../components/modals/edit-document-modal-sec";
 
-import { createConsultationDocumentModalInit } from "../components/modals/create-consultation-document-modal";
 
 const TYPE_LABELS = {
   
@@ -13,7 +12,7 @@ const TYPE_LABELS = {
 };
 
 function typeBadge(type) {
-  const t = TYPE_LABELS[type] ?? { label: type ?? "—", cls: "bg-gray-100 text-gray-700" };
+  const t = TYPE_LABELS[type] ?? { label: type ?? "-", cls: "bg-gray-100 text-gray-700" };
   return `<span class="px-2 py-0.5 rounded text-xs font-semibold ${t.cls}">${t.label}</span>`;
 }
 
@@ -30,7 +29,7 @@ function formatDate(dateStr) {
 
 function truncate(str, len = 40) {
   if (!str) return "—";
-  return str.length > len ? str.slice(0, len) + "…" : str;
+  return str.length > len ? str.slice(0, len) + "..." : str;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -64,27 +63,29 @@ document.addEventListener("DOMContentLoaded", function () {
     filtering: true,
     paging: true,
     fixedColumns: true,
-    columnDefs: [
-      {
-        targets: -1,
-        className: "flex justify-center",
-        width: 10,
-      },
-      {
-        targets: 0,
-        width: 10,
-        className: "text-center flex justify-center w-10 h-[2.35em]",
-      },
-    ],
-    columns: [
-      {
-        data: null,
-        title: "#",
-        className: "rounded-tl-md text-center",
-        orderable: false,
-        searchable: false,
-        render: (data, type, row, meta) => meta.row + meta.settings._iDisplayStart + 1,
-      },
+      columnDefs: [
+          {
+            targets: -1,
+            className: "flex justify-end",
+            width: 10,
+          },
+          {
+            targets: 0,
+            width: 10,
+            className: "text-center flex justify-end w-10 ",
+          },
+        ],
+        columns: [
+            {
+          data: null,
+          title: "#",
+          orderable: false,
+          searchable: false,
+        className: "text-center bg-gray-100 rounded-tl-md",
+      render: (data, type, row, meta) => `
+      <div>${meta.row + meta.settings._iDisplayStart + 1}</div>
+    `,
+    },
      {
     data: "document_type",
     title: `<div class="ml-5">Record Type</div>`,
@@ -147,6 +148,21 @@ document.addEventListener("DOMContentLoaded", function () {
   },
 },
     ],
+    
+     drawCallback: function () {
+    this.api()
+      .column(0, { search: "applied", order: "applied" })
+      .nodes()
+      .each((cell, i) => {
+        cell.innerHTML = `
+        <div class="flex items-center justify-end h-full mx-1 my-1 ">
+          ${i + 1}
+        </div>
+      `;
+      });
+  }, rowCallback: function(row, data, index) {
+    $(row).addClass('border-b border-blue-200 last:border-b-0');
+  },
   });
 
   document

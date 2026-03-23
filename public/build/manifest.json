@@ -13,10 +13,6 @@
       "_dataTables.buttons-DYdWO-36.js"
     ]
   },
-  "_create-consultation-document-modal-C7Sg7G6q.js": {
-    "file": "assets/create-consultation-document-modal-C7Sg7G6q.js",
-    "name": "create-consultation-document-modal"
-  },
   "_dataTables-BZwegt1j.js": {
     "file": "assets/dataTables-BZwegt1j.js",
     "name": "dataTables",
@@ -64,7 +60,7 @@
     "name": "view-appointment-modal"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BVtz8wmt.css",
+    "file": "assets/app-t2a-K9is.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -332,7 +328,7 @@
     ]
   },
   "resources/js/refactored/patient-documents-sec.js": {
-    "file": "assets/patient-documents-sec-7169esov.js",
+    "file": "assets/patient-documents-sec-Dv3woiWm.js",
     "name": "patient-documents-sec",
     "src": "resources/js/refactored/patient-documents-sec.js",
     "isEntry": true,
@@ -340,12 +336,11 @@
       "_jquery.module-dmWpsD9K.js",
       "_dataTables-BZwegt1j.js",
       "_dataTables.buttons-DYdWO-36.js",
-      "_dataTables.responsive-DaNR1ydb.js",
-      "_create-consultation-document-modal-C7Sg7G6q.js"
+      "_dataTables.responsive-DaNR1ydb.js"
     ]
   },
   "resources/js/refactored/patient-documents.js": {
-    "file": "assets/patient-documents-ZxahCafN.js",
+    "file": "assets/patient-documents-CG8KhWmO.js",
     "name": "patient-documents",
     "src": "resources/js/refactored/patient-documents.js",
     "isEntry": true,
@@ -355,7 +350,6 @@
       "_dataTables.buttons-DYdWO-36.js",
       "_dataTables.responsive-DaNR1ydb.js",
       "_edit-document-modal-CfnHuJPW.js",
-      "_create-consultation-document-modal-C7Sg7G6q.js",
       "resources/js/components/modals/delete-document-modal.js",
       "_buttons.print-B0wxGNV-.js",
       "__commonjsHelpers-D6-XlEtG.js",
