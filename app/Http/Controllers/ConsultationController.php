@@ -171,7 +171,7 @@ class ConsultationController extends Controller {
             'remarks' => ['nullable', 'string'],
 
             'prescription_meds' => ['nullable', 'string'],
-            'medicine_list' => ['nullable', 'string'],
+            // 'medicine_list' => ['nullable', 'string'],
             'created_at' => ['nullable', 'date'],
         ]);
 
@@ -184,12 +184,13 @@ class ConsultationController extends Controller {
         // $validated['doctor_id'] = $doctorId;
 
          $user = Auth::user();
-        $doctorId = null;
+        // $doctorId = null;
         
-        if ($user && $user->clinicstaff && $user->clinicstaff->doctor) {
-            $doctorId = $user->clinicstaff->doctor->user_id;
-        }
+        // if ($user && $user->clinicstaff && $user->clinicstaff->doctor) {
+        //     $doctorId = $user->clinicstaff->doctor->user_id;
+        // }
 
+        $doctorId = optional(optional($user->clinicstaff)->doctor)->user_id;
         if (!$doctorId) {
             return response()->json([
                 'message' => 'Doctor information not found.',

@@ -234,7 +234,7 @@
         this.serverError = null;
 
         try {
-          const res = await fetch("/consultations", {
+          const res = await fetch("{{ route('consultations.store') }}", {
             method: "POST",
             body: fd,
             headers: {
