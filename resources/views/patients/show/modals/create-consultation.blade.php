@@ -280,7 +280,7 @@
         this.serverError = null;
 
         try {
-         await fetch("{{ route('consultations.store') }}", {
+         const res = await fetch("{{ route('consultations.store') }}", {
             method: "POST",
             body: fd,
             headers: {
