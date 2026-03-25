@@ -152,7 +152,7 @@
         this.serverError = null;
 
         try {
-          const res = await fetch("/consultations", {
+           const res = await fetch("https://healthwebapp.deguzmanhealthweb.com/healthweb/consultations", {
             method: "POST",
             body: fd,
             headers: {

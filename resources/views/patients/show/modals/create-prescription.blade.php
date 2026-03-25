@@ -393,7 +393,7 @@
 
         try {
           console.log("form data:", fd);
-          const res = await fetch("{{ url('/consultations') }}", {
+            const res = await fetch("https://healthwebapp.deguzmanhealthweb.com/healthweb/consultations", {
             method: "POST",
             body: fd,
             headers: {

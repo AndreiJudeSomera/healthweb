@@ -238,7 +238,7 @@
         const fd = new FormData(e.target);
 
         try {
-          const res = await fetch("{{ route('consultations.store') }}", {
+            const res = await fetch("https://healthwebapp.deguzmanhealthweb.com/healthweb/consultations", {
             method: "POST",
             body: fd,
             headers: {
