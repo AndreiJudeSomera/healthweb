@@ -248,7 +248,7 @@ class ConsultationController extends Controller {
                 ]);
             }
 
-            $this->notifyPatient($validated['patient_pid'], 'prescription');
+            // $this->notifyPatient($validated['patient_pid'], 'prescription');
 
             return response()->json([
                 'message' => 'Prescription created.',
