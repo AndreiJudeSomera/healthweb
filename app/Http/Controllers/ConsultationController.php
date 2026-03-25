@@ -6,6 +6,7 @@ use App\Models\Consultation;
 use App\Models\PatientRecord;
 use App\Models\Prescription;
 use App\Services\IprogSmsService;
+use App\Models\ClinicStaff;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -175,30 +176,29 @@ class ConsultationController extends Controller {
             'created_at' => ['nullable', 'date'],
         ]);
 
-        //     $user = Auth::user();
-        // $doctorId = $user->role == 2
-        //     ? $user->clinicstaff->doctor->user_id ?? null
-        //     : $user->clinicstaff->doctor->user_id ?? null;
+            $user = Auth::user();
+        $doctorId = $user->role == 2
+            ? $user->clinicstaff->doctor->user_id ?? null
+            : $user->clinicstaff->doctor->user_id ?? null;
 
         // // Add doctor_id to validated data
         // $validated['doctor_id'] = $doctorId;
 
-         $user = Auth::user();
+        //  $user = Auth::user();
         // $doctorId = null;
         
         // if ($user && $user->clinicstaff && $user->clinicstaff->doctor) {
         //     $doctorId = $user->clinicstaff->doctor->user_id;
         // }
 
-        $doctorId = optional(optional($user->clinicstaff)->doctor)->user_id;
-        if (!$doctorId) {
-            return response()->json([
-                'message' => 'Doctor information not found.',
-                'errors' => ['doctor_id' => ['Doctor information not found.']],
-            ], 422);
-        }
+        // if (!$doctorId) {
+        //     return response()->json([
+        //         'message' => 'Doctor information not found.',
+        //         'errors' => ['doctor_id' => ['Doctor information not found.']],
+        //     ], 422);
+        // }
 
-        $validated['doctor_id'] = $doctorId;
+        // $validated['doctor_id'] = $doctorId;
 
 
         // Non-prescription
