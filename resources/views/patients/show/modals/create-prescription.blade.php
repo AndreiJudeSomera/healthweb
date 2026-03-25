@@ -250,7 +250,7 @@
         this.medicines_error = null;
 
         try {
-          const res = await fetch("/medicines", {
+          const res = await fetch("{{ url('/medicines') }}", {
             headers: {
               Accept: "application/json"
             },
@@ -393,7 +393,7 @@
 
         try {
           console.log("form data:", fd);
-          const res = await fetch("/consultations", {
+          const res = await fetch("{{ url('/consultations') }}", {
             method: "POST",
             body: fd,
             headers: {

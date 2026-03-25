@@ -201,7 +201,7 @@
         this.serverError = null;
 
         try {
-          const res = await fetch("/consultations", {
+          const res = await fetch("{{ url('/consultations') }}", {
             method: "POST",
             body: fd,
             headers: {

@@ -238,7 +238,7 @@
         const fd = new FormData(e.target);
 
         try {
-          const res = await fetch("{{ route('consultations.store') }}", {
+          const res = await fetch("{{ url('/consultations') }}", {
             method: "POST",
             body: fd,
             headers: {
