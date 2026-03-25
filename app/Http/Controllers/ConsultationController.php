@@ -175,12 +175,28 @@ class ConsultationController extends Controller {
             'created_at' => ['nullable', 'date'],
         ]);
 
-            $user = Auth::user();
-        $doctorId = $user->role == 2
-            ? $user->clinicstaff->doctor->user_id ?? null
-            : $user->clinicstaff->doctor->user_id ?? null;
+        //     $user = Auth::user();
+        // $doctorId = $user->role == 2
+        //     ? $user->clinicstaff->doctor->user_id ?? null
+        //     : $user->clinicstaff->doctor->user_id ?? null;
 
-        // Add doctor_id to validated data
+        // // Add doctor_id to validated data
+        // $validated['doctor_id'] = $doctorId;
+
+         $user = Auth::user();
+        $doctorId = null;
+        
+        if ($user && $user->clinicstaff && $user->clinicstaff->doctor) {
+            $doctorId = $user->clinicstaff->doctor->user_id;
+        }
+
+        if (!$doctorId) {
+            return response()->json([
+                'message' => 'Doctor information not found.',
+                'errors' => ['doctor_id' => ['Doctor information not found.']],
+            ], 422);
+        }
+
         $validated['doctor_id'] = $doctorId;
 
 
