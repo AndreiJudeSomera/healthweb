@@ -404,7 +404,6 @@
               <label class="text-xs font-medium text-blue-950">Relationship <span class="text-red-700"></span></label>
               <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" name="GuardianRelation" >
                 <option disabled selected>Select Relationship</option>
-                <option disabled selected>Select Relationship</option>
               <option value="grandfather">Grandfather</option>
               <option value="grandmother">Grandmother</option>
               <option value="father">Father</option>
@@ -423,7 +422,7 @@
               </select>
             </div>
             <div class="flex flex-col gap-1 flex-1">
-              <label class="text-xs font-medium text-blue-950">Guardian Contact <span class="text-red-700">*</span></label>
+              <label class="text-xs font-medium text-blue-950">Guardian Contact <span class="text-red-700"></span></label>
               <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="GuardianContact" placeholder="09987654321" maxlength="11" />
             </div>
           </div>

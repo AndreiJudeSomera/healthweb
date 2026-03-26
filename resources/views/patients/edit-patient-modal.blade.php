@@ -84,16 +84,16 @@
       <div class="w-full flex flex-row gap-2">
         <div class="flex flex-col gap-1 w-full" id="edit_field_guardian_name">
           <label class="font-medium text-blue-950" for="edit_guardian_name">Guardian Name<span
-              class="font-bold text-red-800 ms-1">*</span></label>
+              class="font-bold text-red-800 ms-1"></span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_guardian_name" type="text"
-            name="guardian_name" pattern="^[A-Za-z\s'.\-]{2,100}$" placeholder="Teodora Alonso Realonda" required />
+            name="guardian_name" pattern="^[A-Za-z\s'.\-]{2,100}$" placeholder="Teodora Alonso Realonda"  />
           <p class="hidden text-red-700" id="edit_error_guardian_name"></p>
         </div>
         <div class="flex flex-col gap-1 w-full" id="edit_field_guardian_relation">
           <label class="font-medium text-blue-950" for="edit_guardian_relation">Relationship<span
-              class="font-bold text-red-800 ms-1">*</span></label>
+              class="font-bold text-red-800 ms-1"></span></label>
           <select class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_guardian_relation"
-            name="guardian_relation" required>
+            name="guardian_relation" >
             <option disabled selected hidden>Select Guardian Relationship</option>
             <option value="grandfather">Grandfather</option>
             <option value="grandmother">Grandmother</option>
@@ -112,9 +112,9 @@
         </div>
         <div class="flex flex-col gap-1 w-full" id="edit_field_guardian_contact">
           <label class="font-medium text-blue-950" for="edit_guardian_contact">Contact Number<span
-              class="font-bold text-red-800 ms-1">*</span></label>
+              class="font-bold text-red-800 ms-1"></span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_guardian_contact"
-            type="text" name="guardian_contact" placeholder="0998 765 4321" required />
+            type="text" name="guardian_contact" placeholder="0998 765 4321"  />
           <p class="hidden text-red-700" id="edit_error_guardian_contact"></p>
         </div>
       </div>

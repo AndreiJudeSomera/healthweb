@@ -27,6 +27,13 @@ export function formatDate(dateStr) {
 
   return `${month} ${day}, ${year}`;
 }
+function toTitleCase(str) {
+  if (!str) return "";
+  return str
+    .split(" ") // split words by space
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
 const patientsTable = new DataTable("#patientsTable", {
   ajax: {
     url: "/patients/records",
@@ -65,10 +72,12 @@ const patientsTable = new DataTable("#patientsTable", {
    {
   data: "user_last_name", 
   title: `<div class="2">Last Name</div>`,
-  render: (row) => `<div class="2">${row}</div>`,
+  render: (row) => `<div class="2">${toTitleCase(row)}</div>`, 
+  
 },
     { data: "user_first_name",
        title: "First Name",
+        render: (row) => `<div class="2">${toTitleCase(row)}</div>`, 
       
       },
     { data: "age",

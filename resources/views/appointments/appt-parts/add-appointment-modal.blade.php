@@ -53,7 +53,7 @@
         <div class="flex flex-col gap-1 w-full">
           <label class="text-sm" for="guest_contact">Cellphone Number</label>
           <input class="p-2 w-full border-blue-950 border-2 rounded-md font-medium" id="guest_contact"
-            type="tel" name="guest_contact" placeholder="e.g. 09171234567" />
+            type="tel" name="guest_contact" placeholder="e.g. 09171234567" maxlength="11" />
         </div>
       </div>
 

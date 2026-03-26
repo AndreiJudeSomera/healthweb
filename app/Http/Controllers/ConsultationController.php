@@ -172,7 +172,7 @@ class ConsultationController extends Controller {
             'remarks' => ['nullable', 'string'],
 
             'prescription_meds' => ['nullable', 'string'],
-            // 'medicine_list' => ['nullable', 'string'],
+            'medicine_list' => ['nullable', 'string'],
             'created_at' => ['nullable', 'date'],
         ]);
 

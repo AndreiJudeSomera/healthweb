@@ -69,8 +69,8 @@ class ReportsController extends Controller
             'Teens (13-19)'        => [13, 19],
             'Young Adults (20-35)' => [20, 35],
             'Middle-age (36-50)'   => [36, 50],
-            'Older Adults (51-65)' => [51, 65],
-            'Seniors (65+)'        => [66, 999],
+            'Older Adults (51-59)' => [51, 59],
+            'Seniors (60+)'        => [60, 999],
         ];
 
         $counts = array_fill_keys(array_keys($groups), 0);

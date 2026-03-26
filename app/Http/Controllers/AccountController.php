@@ -119,6 +119,7 @@ public function store(Request $request)
       'password' => 'nullable|string|min:6|confirmed',
     ]);
 
+    
     if ($validator->fails()) {
       return response()->json(['errors' => $validator->errors()], 422);
     }
@@ -239,6 +240,26 @@ public function store(Request $request)
         'DateofBirth' => 'required|date',
     ]);
 
+    // // Step 1: Add duplicate check if patient has no record
+    $validator->after(function ($validator) use ($request, $patient) {
+        // Only check duplicates if patient has no record yet
+        if (!$patient->record) {
+            $firstName = trim(strtolower($request->Fname));
+            $lastName  = trim(strtolower($request->Lname));
+            $dob       = $request->DateofBirth;
+
+            $exists = PatientRecord::whereRaw('LOWER(TRIM(first_name)) = ?', [$firstName])
+                ->whereRaw('LOWER(TRIM(last_name)) = ?', [$lastName])
+                ->where('date_of_birth', $dob)
+                ->exists();
+
+            if ($exists) {
+                $validator->errors()->add('patient', 'Patient record already exists in the clinic.');
+            }
+        }
+    });
+
+    // Stop if validation fails
     if ($validator->fails()) {
         return response()->json(['errors' => $validator->errors()], 422);
     }
@@ -364,8 +385,26 @@ public function store(Request $request)
       'DateofBirth' => 'required|date',
     ]);
 
+      // Step 2: Add duplicate check after basic validation
+    $validator->after(function ($validator) use ($request) {
+        $firstName = trim(strtolower($request->Fname));
+        $lastName = trim(strtolower($request->Lname));
+        $dob = $request->DateofBirth;
+
+        $exists = PatientRecord::whereRaw('LOWER(TRIM(first_name)) = ?', [$firstName])
+            ->whereRaw('LOWER(TRIM(last_name)) = ?', [$lastName])
+            ->where('date_of_birth', $dob)
+            ->exists();
+
+        if ($exists) {
+            // Add error to a specific field (or 'patient' as general)
+            $validator->errors()->add('patient', 'Patient record already exists in the clinic.');
+        }
+    });
+
+    // Step 3: Stop execution if validation fails
     if ($validator->fails()) {
-      return response()->json(['errors' => $validator->errors()], 422);
+        return response()->json(['errors' => $validator->errors()], 422);
     }
 
     $familyHistory = $request->input('family_history', []);

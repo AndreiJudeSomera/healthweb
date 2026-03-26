@@ -250,7 +250,7 @@
         this.medicines_error = null;
 
         try {
-          const res = await fetch("{{ url('/medicines') }}", {
+          const res = await fetch("{{ route('prescription_items.index') }}", {
             headers: {
               Accept: "application/json"
             },

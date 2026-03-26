@@ -41,16 +41,49 @@ class StorePatientRecordRequest extends FormRequest {
    
       'others' => ['nullable', 'string', 'max:255'],
     ];
-  }
+  }public function withValidator($validator)
+{
+    $validator->after(function ($validator) {
+        $first  = strtolower(trim($this->first_name));
+        $last   = strtolower(trim($this->last_name));
+        $middle = strtolower(trim($this->middle_name ?? ''));
+        $dob    = $this->date_of_birth;
 
-  protected function prepareForValidation(): void {
-    // Unchecked checkboxes become false
+        // Fetch patients with the same DOB (date_of_birth is not encrypted)
+        $potentialDuplicates = \App\Models\PatientRecord::whereDate('date_of_birth', $dob)->get();
+
+        foreach ($potentialDuplicates as $patient) {
+            // Decrypt the names for comparison
+            $existingFirst  = strtolower($patient->first_name); // your accessor already decrypts
+            $existingLast   = strtolower($patient->last_name);
+            $existingMiddle = strtolower($patient->middle_name ?? '');
+
+            if ($first === $existingFirst && $last === $existingLast && $middle === $existingMiddle) {
+                $validator->errors()->add('first_name', 'Patient record already exists.');
+                break; // Stop after first match
+            }
+        }
+    });
+}
+  // protected function prepareForValidation(): void {
+  //   // Unchecked checkboxes become false
 
     
+  //   foreach (['hypertension', 'asthma', 'diabetes', 'thyroid', 'cancer'] as $k) {
+  //     $this->merge([$k => $this->boolean($k)]);
+  //   }
+  // }
+  protected function prepareForValidation(): void {
+    $this->merge([
+        'first_name' => strtolower(trim($this->first_name)),
+        'last_name' => strtolower(trim($this->last_name)),
+        'middle_name' => $this->middle_name ? strtolower(trim($this->middle_name)) : null,
+    ]);
+
     foreach (['hypertension', 'asthma', 'diabetes', 'thyroid', 'cancer'] as $k) {
-      $this->merge([$k => $this->boolean($k)]);
+        $this->merge([$k => $this->boolean($k)]);
     }
-  }
+}
 
   public function messages(): array {
     return [
