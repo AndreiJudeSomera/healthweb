@@ -44,11 +44,25 @@ class UpdatePatientRecordRequest extends FormRequest {
   }
 
   protected function prepareForValidation(): void {
+     $this->merge([
+        'first_name' => $this->toSentenceCase($this->first_name),
+        'last_name'  => $this->toSentenceCase($this->last_name),
+        'middle_name' => $this->middle_name ? $this->toSentenceCase($this->middle_name) : null,
+    ]);
     // Unchecked checkboxes become false
     foreach (['hypertension', 'asthma', 'diabetes', 'thyroid', 'cancer'] as $k) {
       $this->merge([$k => $this->boolean($k)]);
     }
   }
+  
+private function toSentenceCase($value)
+{
+    if (!$value) return $value;
+
+    return collect(explode(' ', trim($value)))
+        ->map(fn($word) => ucfirst(strtolower($word)))
+        ->implode(' ');
+}
 
   public function messages(): array {
     return [

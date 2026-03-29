@@ -1,5 +1,9 @@
 <x-modal-garic id="view-record" title="View Appointment" maxWidth="max-w-[520px]">
-  <div class="w-full flex flex-col gap-3 text-blue-950">
+  <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">
+    <img class="w-[200px] -my-12" src="{{ asset('assets/images/logo2.png') }}" alt="Logo">
+    <h1 class="font-semibold text-xl">VIEW APPOINTMENT</h1>
+  </div>
+<div class="w-full flex flex-col gap-3 text-blue-950">
     <div class="flex justify-between">
       <p class="text-sm">Date</p>
       <p class="font-medium" id="view_appt_date">—</p>

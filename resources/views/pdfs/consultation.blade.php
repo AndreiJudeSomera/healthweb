@@ -6,6 +6,9 @@
     .doc {
       font-size: 14px;
       color: #111;
+      margin-left: 0.3in;
+        font-family: "Times New Roman", Times, serif;
+
     }
 
     /* Header */
@@ -46,7 +49,8 @@
 
     /* Sections */
     .section {
-      margin-top: 18px;
+      margin-top: 30px;
+      font-size: 14px;
     }
 
     .section h3 {
@@ -65,6 +69,7 @@
     .patient-left {
       float: left;
       width: 62%;
+      
     }
 
     .patient-right {
@@ -101,6 +106,7 @@
       display: inline-block;
       margin-right: 18px;
       white-space: nowrap;
+      font-size: 14px;
     }
 
     .vital b {
@@ -113,6 +119,7 @@
       /* keep newlines from textarea */
       line-height: 1.55;
       margin-top: 2px;
+      
     }
 
     /* Signature spacing */
@@ -218,4 +225,5 @@
     </div>
   </div>
   @include("pdfs.partials.doctor-signature", ["consultation" => $consultation])
+    
 @endsection

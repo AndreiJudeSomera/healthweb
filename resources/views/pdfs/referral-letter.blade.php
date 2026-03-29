@@ -2,12 +2,18 @@
 
 @section("styles")
   <style>
+      .doc {
+  font-size: 14px;
+  color: #111;
+  margin-left: 0.3in;
+  font-family: "Times New Roman", Times, serif;
+}
     .title {
       text-align: center;
       font-weight: 700;
       letter-spacing: 2px;
-      margin: 18px 0 34px;
       font-size: 16px;
+      margin: 4px 0 18px;
     }
 
     .date-right {
@@ -17,7 +23,7 @@
     }
 
     .to {
-      margin-top: 40px;
+      margin-top: 60px;
       font-weight: 500;
       letter-spacing: 1px;
     }
@@ -45,7 +51,7 @@
     }
 
     .section {
-      margin-top: 55px;
+      margin-top: 40px;
     }
 
     .section-title {
@@ -87,7 +93,7 @@
     $diagnosis = trim((string) ($consultation->diagnosis ?? ""));
     $reason = trim((string) ($consultation->referral_reason ?? ""));
   @endphp
-
+ <div class="doc">
   <div class="title">REFERRAL LETTER</div>
 
   <div class="date-right">
@@ -133,4 +139,5 @@
   <div style="margin-top:70px;">Thank You Very Much !</div>
 
   @include("pdfs.partials.doctor-signature", ["consultation" => $consultation])
+  </div>
 @endsection

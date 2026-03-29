@@ -180,6 +180,17 @@ class AppointmentController extends Controller {
           );
         }
       }
+      // SMS → patient on cancellation (registered or guest)
+        if ($appointment->status === 'cancelled') {
+          $contactNumber = $record?->contact_number ?? $appointment->guest_contact;
+          if ($contactNumber) {
+            $time = Carbon::parse($appointment->appointment_time)->format('h:i A');
+            app(IprogSmsService::class)->send(
+              $contactNumber,
+              "HealthWeb: Your {$appointment->appointment_type} appointment on {$appointment->appointment_date} at {$time} has been cancelled. Please check the clinic's available days and reschedule your appointment at a convenient time. Please contact the clinic if you have questions."
+            );
+          }
+        }
     }
 
     return response()->json([
@@ -188,6 +199,44 @@ class AppointmentController extends Controller {
     ]);
   }
 
+  public function cancel(int $id) {
+  $appointment = Appointment::find($id);
+
+  if (!$appointment) {
+    return response()->json(['message' => 'Appointment not found'], 404);
+  }
+
+  // If already cancelled, avoid duplicate SMS
+  if ($appointment->status === 'cancelled') {
+    return response()->json([
+      'message' => 'Appointment is already cancelled',
+      'data' => $appointment
+    ]);
+  }
+
+  // Set status to cancelled instead of deleting
+  $appointment->update(['status' => 'cancelled']);
+
+  // SMS → patient (registered or guest)
+  $record        = $appointment->patient_pid
+      ? PatientRecord::where('pid', $appointment->patient_pid)->first()
+      : null;
+
+  $contactNumber = $record?->contact_number ?? $appointment->guest_contact;
+
+  if ($contactNumber) {
+    $time = Carbon::parse($appointment->appointment_time)->format('h:i A');
+    app(IprogSmsService::class)->send(
+      $contactNumber,
+      "HealthWeb: Your {$appointment->appointment_type} appointment on {$appointment->appointment_date} at {$time} has been cancelled. Please check the clinic's available days and reschedule your appointment at a convenient time. Please contact the clinic if you have questions."
+    );
+  }
+
+  return response()->json([
+    'message' => 'Appointment cancelled successfully',
+    'data' => $appointment
+  ]);
+}
   public function destroy(int $id) {
     $appointment = Appointment::find($id);
 
@@ -195,21 +244,10 @@ class AppointmentController extends Controller {
       return response()->json(['message' => 'Appointment not found'], 404);
     }
 
-    // SMS → patient before deleting (registered or guest)
-    $record        = $appointment->patient_pid ? PatientRecord::where('pid', $appointment->patient_pid)->first() : null;
-    $contactNumber = $record?->contact_number ?? $appointment->guest_contact;
-    if ($contactNumber) {
-      $time = Carbon::parse($appointment->appointment_time)->format('h:i A');
-      app(IprogSmsService::class)->send(
-        $contactNumber,
-        "HealthWeb: Your {$appointment->appointment_type} appointment on {$appointment->appointment_date} at {$time} has been cancelled. Please check the clinic’s available days and reschedule your appointment at a convenient time. Please contact the clinic if you have questions."
-      );
-    }
-
     $appointment->delete();
 
     return response()->json([
-      'message' => 'Appointment cancelled successfully',
+      'message' => 'Appointment deleted successfully',
     ]);
   }
 
@@ -259,7 +297,7 @@ class AppointmentController extends Controller {
 
     $appointments = Appointment::with(['patient', 'doctor.user:id,username'])
       ->where('appointment_date', $date)
-      ->whereIn('status', ['pending', 'approved'])
+      ->whereIn('status', ['pending', 'approved','completed'])
       ->orderBy('appointment_time')
       ->get()
       ->groupBy('appointment_time');

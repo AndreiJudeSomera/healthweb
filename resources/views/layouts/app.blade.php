@@ -208,4 +208,5 @@ window.authUserId = {{ auth()->id() ?? 'null' }};
 </script>
 <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
 
+
 </html>

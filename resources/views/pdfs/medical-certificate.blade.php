@@ -2,6 +2,12 @@
 
 @section("styles")
   <style>
+    .doc {
+  font-size: 14px;
+  color: #111;
+  margin-left: 0.3in;
+  font-family: "Times New Roman", Times, serif;
+}
     .info-row {
       margin-top: 24px;
     }
@@ -22,9 +28,11 @@
     }
 
     .section-title {
+     text-align: center;
       font-weight: 700;
       letter-spacing: 2px;
-      margin-top: 24px;
+      font-size: 16px;
+      margin: 2px 0 18px;
     }
 
     .cert-body {
@@ -32,6 +40,7 @@
       text-align: justify;
       line-height: 1.8;
       font-size: 14px;
+      
     }
 
     .remarks {
@@ -42,7 +51,7 @@
     .footer-note {
       margin-top: 70px;
       text-align: center;
-      font-size: 12px;
+      font-size: 14px;
     }
   </style>
 @endsection
@@ -77,13 +86,12 @@
     $referralReason = trim((string) ($consultation->referral_reason ?? ""));
   @endphp
 
+  <div class="doc">
   <div class="title">MEDICAL CERTIFICATE</div>
 
   <div class="row clearfix info-row">
-    <div class="info-left">
-      <div class="section-title">PATIENT INFORMATION</div>
-      <div class="line"><span class="muted">Name :</span> {{ $fullName !== "" ? $fullName : "—" }}</div>
-    </div>
+    
+  
 
     <div class="info-right">
       <div style="font-size:14px;">
@@ -93,13 +101,15 @@
   </div>
 
   <div class="cert-body">
+     <span style="display:block; text-indent:0.5in;">
     This is to certify that
+  
     <strong>{{ $fullName !== "" ? strtoupper($fullName) : "________________" }}</strong>,
     {{ $age ? $age . "y.o" : "___y.o" }}, {{ $sex ?: "____" }},
     currently residing at <span>{{ $address ?: "________________" }}</span>
-    has been seen and examined in my clinic on <span>{{ $dateLabel }}</span>
+    has been examined in my clinic on <span>{{ $dateLabel }}</span>
     and was given the following diagnosis:
-    <span>{{ $diagnosis !== "" ? strtoupper($diagnosis) : "________________________" }}</span>
+   <strong><span>{{ $diagnosis !== "" ? strtoupper($diagnosis) : "________________________" }}</span></strong> </span>
   </div>
 
   <div class="remarks">
@@ -108,8 +118,9 @@
 
   <div class="footer-note">
     This certificate is issued upon the request of {{ $referralTo ?: "________________" }} for
-    {{ $referralReason ?: "________________" }}, except medico legal.
+    {{ $referralReason ?: "________________" }} purposes except medico legal.
   </div>
 
   @include("pdfs.partials.doctor-signature", ["consultation" => $consultation])
+  </div>
 @endsection

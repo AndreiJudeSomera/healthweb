@@ -78,7 +78,7 @@
 
                 
         <p class="text-xs text-gray-500 mt-1" x-show="form.document_type !== 'referral-letter'">
-          Examples: <span class="font-medium">School</span>, <span class="font-medium">Employer</span>, <span class="font-medium">Parent/Guardian</span>, <span class="font-medium">Insurance Company</span>, <span class="font-medium">HR Department</span>, <span class="font-medium">Government Office</span>
+          Examples: <span class="font-medium">Patient</span>, <span class="font-medium">School</span>, <span class="font-medium">Parent/Guardian</span>, <span class="font-medium">Company</span>, <span class="font-medium">HR Department</span>, <span class="font-medium">Government Office</span>
         </p>
               <p class="text-xs text-red-600" x-show="showError('referral_to')" x-text="errors.referral_to"></p>
             </div>
@@ -102,7 +102,7 @@
 
   <!-- Request Examples -->
   <p class="text-xs text-gray-500 mt-1" x-show="form.document_type !== 'referral-letter'">
-    Examples:  <span class="font-medium">Absence</span>, <span class="font-medium">Work Leave</span>, <span class="font-medium">Insurance Claim</span>, <span class="font-medium">Travel Clearance</span>, <span class="font-medium">Medical Requirement</span>, <span class="font-medium">Return-to-Work Clearance</span>
+    Examples:  <span class="font-medium">Absence</span>, <span class="font-medium">Work Leave</span>, <span class="font-medium">Insurance Claim</span>, <span class="font-medium">Travel Clearance</span>, <span class="font-medium">Medical Requirement</span>
   </p>
 
   <p class="text-xs text-red-600" x-show="showError('referral_to')" x-text="errors.referral_to"></p>

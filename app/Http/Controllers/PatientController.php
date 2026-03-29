@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+  use Illuminate\Support\Str;
+
 
 class PatientController extends Controller {
   public function index(Request $request) {
@@ -210,92 +212,243 @@ class PatientController extends Controller {
     return view('mobilelayouts.onboarding.new-patient', ['authId' => $authId]);
   }
 
-  public function storeNewPatientRecord(Request $request, AuditLogService $audit) {
+  // public function storeNewPatientRecord(Request $request, AuditLogService $audit) {
+  //   $userId = Auth::id();
+  //   if (!$userId) {
+  //     return redirect()->route('login')->with('failed', 'Please login again.');
+  //   }
+
+  //   // Validate form (matches your Blade fields)
+  //   $validated = $request->validate([
+  //     'last_name' => ['required', 'string', 'max:100'],
+  //     'first_name' => ['required', 'string', 'max:100'],
+  //     'middle_name' => ['nullable', 'string', 'max:100'],
+
+  //     'date_of_birth' => ['required', 'date'],
+  //     'gender' => ['required', 'in:male,female'],
+  //     'nationality' => ['required', 'string', 'max:100'],
+
+  //     'contact_number' => ['required', 'string', 'max:30'],
+  //     'address' => ['required', 'string', 'max:255'],
+
+  //     'guardian_name' => ['nullable', 'string', 'max:100'],
+  //     'guardian_relation' => ['nullable', 'string', 'max:50'],
+  //     'guardian_contact' => ['nullable', 'string', 'max:30'],
+
+  //     'allergy' => ['required', 'string', 'max:255'],
+  //     'alcohol' => ['required', 'in:never,occasional,heavy'],
+  //     'years_of_smoking' => ['required', 'integer', 'min:0', 'max:120'],
+  //     'illicit_drug_use' => ['required', 'string', 'max:50'],
+
+  //     // checkboxes: if checked => "on", else missing
+  //     'hypertension' => ['nullable'],
+  //     'asthma' => ['nullable'],
+  //     'diabetes' => ['nullable'],
+  //     'cancer' => ['nullable'],
+  //     'thyroid' => ['nullable'],
+
+  //     'others' => ['nullable', 'string', 'max:255'],
+  //   ]);
+
+  //   // Normalize checkbox values to 0/1 (optional but recommended)
+  //   $validated['hypertension'] = $request->boolean('hypertension');
+  //   $validated['asthma'] = $request->boolean('asthma');
+  //   $validated['diabetes'] = $request->boolean('diabetes');
+  //   $validated['cancer'] = $request->boolean('cancer');
+  //   $validated['thyroid'] = $request->boolean('thyroid');
+
+  //   try {
+  //     DB::beginTransaction();
+
+  //     // 1) create patient record
+  //     $record = PatientRecord::create($validated);
+
+  //     // 2) bind to patients table (upsert)
+  //     Patient::updateOrCreate(
+  //       ['user_id' => $userId],
+  //       [
+  //         'record_id' => $record->id,
+  //         'patient_type' => 'new',
+  //       ]
+  //     );
+
+  //     DB::commit();
+
+  //     $audit->log(
+  //       action: 'patient_record.create',
+  //       userId: $userId,
+  //       entityType: 'PatientRecord',
+  //       entityId: $record->id,
+  //       meta: [
+  //         'patient_id' => $patient->id ?? null,
+  //         'patient_type' => 'new',
+  //         'pid' => $record->pid ?? null, // if you have pid column
+  //         'name' => trim(($record->last_name ?? '') . ', ' . ($record->first_name ?? '') . ' ' . ($record->middle_name ?? '')),
+  //       ]
+  //     );
+
+  //     return redirect()
+  //       ->route('patient.dashboard')
+  //       ->with('success', 'New patient record created successfully!');
+  //   } catch (\Throwable $e) {
+  //     DB::rollBack();
+
+  //     return back()
+  //       ->withInput()
+  //       ->with('failed', 'Failed to create record. Please try again.');
+  //   }
+  // }
+
+
+
+public function storeNewPatientRecord(Request $request, AuditLogService $audit)
+{
     $userId = Auth::id();
+
     if (!$userId) {
-      return redirect()->route('login')->with('failed', 'Please login again.');
+        return redirect()->route('login')->with('failed', 'Please login again.');
     }
 
-    // Validate form (matches your Blade fields)
+    /*
+    |--------------------------------------------------------------------------
+    | VALIDATION
+    |--------------------------------------------------------------------------
+    */
     $validated = $request->validate([
-      'last_name' => ['required', 'string', 'max:100'],
-      'first_name' => ['required', 'string', 'max:100'],
-      'middle_name' => ['nullable', 'string', 'max:100'],
+        'last_name' => ['required', 'string', 'max:100'],
+        'first_name' => ['required', 'string', 'max:100'],
+        'middle_name' => ['nullable', 'string', 'max:100'],
 
-      'date_of_birth' => ['required', 'date'],
-      'gender' => ['required', 'in:male,female'],
-      'nationality' => ['required', 'string', 'max:100'],
+        'date_of_birth' => ['required', 'date'],
+        'gender' => ['required', 'in:male,female'],
+        'nationality' => ['required', 'string', 'max:100'],
 
-      'contact_number' => ['required', 'string', 'max:30'],
-      'address' => ['required', 'string', 'max:255'],
+        'contact_number' => ['required', 'string', 'max:30'],
+        'address' => ['required', 'string', 'max:255'],
 
-      'guardian_name' => ['nullable', 'string', 'max:100'],
-      'guardian_relation' => ['nullable', 'string', 'max:50'],
-      'guardian_contact' => ['nullable', 'string', 'max:30'],
+        'guardian_name' => ['nullable', 'string', 'max:100'],
+        'guardian_relation' => ['nullable', 'string', 'max:50'],
+        'guardian_contact' => ['nullable', 'string', 'max:30'],
 
-      'allergy' => ['required', 'string', 'max:255'],
-      'alcohol' => ['required', 'in:never,occasional,heavy'],
-      'years_of_smoking' => ['required', 'integer', 'min:0', 'max:120'],
-      'illicit_drug_use' => ['required', 'string', 'max:50'],
+        'allergy' => ['required', 'string', 'max:255'],
+        'alcohol' => ['required', 'in:never,occasional,heavy'],
+        'years_of_smoking' => ['required', 'integer', 'min:0', 'max:120'],
+        'illicit_drug_use' => ['required', 'string', 'max:50'],
 
-      // checkboxes: if checked => "on", else missing
-      'hypertension' => ['nullable'],
-      'asthma' => ['nullable'],
-      'diabetes' => ['nullable'],
-      'cancer' => ['nullable'],
-      'thyroid' => ['nullable'],
+        'hypertension' => ['nullable'],
+        'asthma' => ['nullable'],
+        'diabetes' => ['nullable'],
+        'cancer' => ['nullable'],
+        'thyroid' => ['nullable'],
 
-      'others' => ['nullable', 'string', 'max:255'],
+        'others' => ['nullable', 'string', 'max:255'],
     ]);
 
-    // Normalize checkbox values to 0/1 (optional but recommended)
+    /*
+    |--------------------------------------------------------------------------
+    | NORMALIZE CHECKBOXES
+    |--------------------------------------------------------------------------
+    */
     $validated['hypertension'] = $request->boolean('hypertension');
     $validated['asthma'] = $request->boolean('asthma');
     $validated['diabetes'] = $request->boolean('diabetes');
     $validated['cancer'] = $request->boolean('cancer');
     $validated['thyroid'] = $request->boolean('thyroid');
 
-    try {
-      DB::beginTransaction();
+    /*
+    |--------------------------------------------------------------------------
+    | SENTENCE CASE NORMALIZATION
+    |--------------------------------------------------------------------------
+    */
+    $validated['first_name'] = $this->toSentenceCase($validated['first_name']);
+    $validated['last_name']  = $this->toSentenceCase($validated['last_name']);
+    $validated['middle_name'] = $validated['middle_name']
+        ? $this->toSentenceCase($validated['middle_name'])
+        : null;
 
-      // 1) create patient record
-      $record = PatientRecord::create($validated);
+    /*
+    |--------------------------------------------------------------------------
+    | DUPLICATE CHECK (case-insensitive)
+    |--------------------------------------------------------------------------
+    */
+    $duplicate = PatientRecord::whereDate('date_of_birth', $validated['date_of_birth'])
+        ->get()
+        ->first(function ($record) use ($validated) {
+            return
+                mb_strtolower(trim($record->first_name)) === mb_strtolower(trim($validated['first_name'])) &&
+                mb_strtolower(trim($record->last_name)) === mb_strtolower(trim($validated['last_name']));
+        });
 
-      // 2) bind to patients table (upsert)
-      Patient::updateOrCreate(
-        ['user_id' => $userId],
-        [
-          'record_id' => $record->id,
-          'patient_type' => 'new',
-        ]
-      );
-
-      DB::commit();
-
-      $audit->log(
-        action: 'patient_record.create',
-        userId: $userId,
-        entityType: 'PatientRecord',
-        entityId: $record->id,
-        meta: [
-          'patient_id' => $patient->id ?? null,
-          'patient_type' => 'new',
-          'pid' => $record->pid ?? null, // if you have pid column
-          'name' => trim(($record->last_name ?? '') . ', ' . ($record->first_name ?? '') . ' ' . ($record->middle_name ?? '')),
-        ]
-      );
-
-      return redirect()
-        ->route('patient.dashboard')
-        ->with('success', 'New patient record created successfully!');
-    } catch (\Throwable $e) {
-      DB::rollBack();
-
-      return back()
-        ->withInput()
-        ->with('failed', 'Failed to create record. Please try again.');
+    if ($duplicate) {
+        return back()
+            ->withInput()
+            ->with('failed', 'Patient record already exists.');
     }
-  }
+
+    try {
+        DB::beginTransaction();
+
+        /*
+        |--------------------------------------------------------------------------
+        | CREATE RECORD
+        |--------------------------------------------------------------------------
+        */
+        $record = PatientRecord::create($validated);
+
+        /*
+        |--------------------------------------------------------------------------
+        | BIND PATIENT
+        |--------------------------------------------------------------------------
+        */
+        $patient = Patient::updateOrCreate(
+            ['user_id' => $userId],
+            [
+                'record_id' => $record->id,
+                'patient_type' => 'new',
+            ]
+        );
+
+        DB::commit();
+
+        /*
+        |--------------------------------------------------------------------------
+        | AUDIT LOG (FIXED $patient usage)
+        |--------------------------------------------------------------------------
+        */
+        $audit->log(
+            action: 'patient_record.create',
+            userId: $userId,
+            entityType: 'PatientRecord',
+            entityId: $record->id,
+            meta: [
+                'patient_id' => $patient->id,
+                'patient_type' => 'new',
+                'pid' => $record->pid ?? null,
+                'name' => trim(($record->last_name ?? '') . ', ' . ($record->first_name ?? '') . ' ' . ($record->middle_name ?? '')),
+            ]
+        );
+
+        return redirect()
+            ->route('patient.dashboard')
+            ->with('success', 'New patient record created successfully!');
+
+    } catch (\Throwable $e) {
+        DB::rollBack();
+
+        return back()
+            ->withInput()
+            ->with('failed', 'Failed to create record. Please try again.');
+    }
+}
+
+private function toSentenceCase($value)
+{
+    if (!$value) return $value;
+
+    return collect(explode(' ', trim($value)))
+        ->map(fn($word) => ucfirst(strtolower($word)))
+        ->implode(' ');
+}
 
   public function dashboardPatientRole() {
     $patient = Patient::with('record', 'user')->where('user_id', auth()->id())->first();

@@ -225,60 +225,65 @@
       <p class="text-xs font-bold uppercase tracking-widest text-blue-950/50">Personal Details</p>
       <div class="grid grid-cols-3 gap-3">
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">LAST NAME<span class="text-red-700">*</span></label>
+          <label class="text-xs font-medium text-blue-950">Last Name <span class="text-red-700"> *</span></label>
+          <!-- <label class="font-semibold text-sm">LAST NAME<span class="text-red-700"> *</span></label> -->
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="Lname" type="text" placeholder="Dela Cruz">
+            name="Lname" type="text" placeholder="Dela Cruz" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required >
           <p class="hidden text-red-600 text-xs" data-error="Lname"></p>
         </div>
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">FIRST NAME<span class="text-red-700">*</span></label>
+          <!-- <label class="font-semibold text-sm">FIRST NAME<span class="text-red-700"> *</span></label> -->
+           <label class="text-xs font-medium text-blue-950">First Name <span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="Fname" type="text" placeholder="Juan">
+            name="Fname" type="text" placeholder="Juan" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required >
           <p class="hidden text-red-600 text-xs" data-error="Fname"></p>
         </div>
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">MIDDLE NAME<span class="text-red-700">*</span></label>
+          <!-- <label class="font-semibold text-sm">M NAME<span class="text-red-700"> *</span></label> --> 
+           <label class="text-xs font-medium text-blue-950">Middle Name <span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="Mname" type="text" placeholder="Santos">
+            name="Mname" type="text" placeholder="Santos" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$ " >
         </div>
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">BIRTHDATE<span class="text-red-700">*</span></label>
+          <!-- <label class="font-semibold text-sm">BIRTHDATE<span class="text-red-700"> *</span></label> -->
+           <label class="text-xs font-medium text-blue-950">Birtdate<span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="DateofBirth" type="date">
+            name="DateofBirth" type="date" required>
         </div>
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">SEX<span class="text-red-700">*</span></label>
+          <label class="text-xs font-medium text-blue-950">Sex<span class="text-red-700"> *</span></label>
           <select class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="Gender">
+            name="Gender" required>
             <option value="">— Select —</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>
         </div>
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">CONTACT<span class="text-red-700">*</span></label>
+            <label class="text-xs font-medium text-blue-950">Contact<span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="ContactNumber" type="text" placeholder="09123456789" maxlength="11" required>
+            name="ContactNumber" type="text" placeholder="09123456789"  pattern="^[0-9]{11}$" maxlength="11" required>
         </div>
         <div class="flex flex-col gap-1 col-span-3">
-          <label class="font-semibold text-sm">ADDRESS <span class="text-red-700">*</span></label>
+          <!-- <label class="font-semibold text-sm">ADDRESS <span class="text-red-700"> *</span></label> -->
+              <label class="text-xs font-medium text-blue-950">Address<span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="Address" type="text" placeholder="Brgy. 5, Calamba, Laguna">
+            name="Address" type="text" placeholder="Brgy. 5, Calamba, Laguna" required>
         </div>
       </div>
 
       <p class="text-xs font-bold uppercase tracking-widest text-blue-950/50 mt-1">Professional Details</p>
       <div class="grid grid-cols-2 gap-3">
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">LICENSE NO. <span class="text-red-700">*</span></label>
+             <label class="text-xs font-medium text-blue-950">License No.<span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="dr_license_no" type="text" placeholder="e.g. 0123456">
+            name="dr_license_no" type="text" placeholder="e.g. 0123456 " pattern="^\d+$" required>
           <p class="hidden text-red-600 text-xs" data-error="dr_license_no"></p>
         </div>
         <div class="flex flex-col gap-1">
-          <label class="font-semibold text-sm">PTR NO.</label>
+          <label class="text-xs font-medium text-blue-950">PTR No.<span class="text-red-700"> *</span></label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="ptr_no" type="text" placeholder="e.g. 7654321">
+            name="ptr_no" type="text" placeholder="e.g. 7654321" pattern="^\d+$" required>
           <p class="hidden text-red-600 text-xs" data-error="ptr_no"></p>
         </div>
       </div>
@@ -354,15 +359,15 @@
           <div class="flex gap-2">
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Last Name <span class="text-red-700">*</span></label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Lname" placeholder="Rizal" required />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Lname" placeholder="Rizal" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required />
             </div>
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">First Name <span class="text-red-700">*</span></label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Fname" placeholder="Jose" required />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Fname" placeholder="Jose" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required />
             </div>
-            <div class="flex flex-col gap-1 flex-1">
+            <div class="flex flex-col gap-1 flex-1"> 
               <label class="text-xs font-medium text-blue-950">Middle Name</label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Mname" placeholder="Protacio" />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm"  pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" type="text" name="Mname" placeholder="Protacio" />
             </div>
           </div>
           <div class="flex gap-2">
@@ -382,13 +387,13 @@
             </div>
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Nationality <span class="text-red-700">*</span></label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Nationality" placeholder="Filipino" required />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Nationality" placeholder="Filipino" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"  required />
             </div>
           </div>
           <div class="flex gap-2">
             <div class="flex flex-col gap-1 w-48">
               <label class="text-xs font-medium text-blue-950">Contact Number <span class="text-red-700">*</span></label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="ContactNumber" placeholder="09123456789" maxlength="11" required />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="ContactNumber" placeholder="09123456789"  pattern="^[0-9]{11}$" maxlength="11" required />
             </div>
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Address <span class="text-red-700">*</span></label>
@@ -398,7 +403,7 @@
           <div class="flex gap-2">
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Guardian Name <span class="text-red-700"></span></label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="GuardianName" placeholder="Teodora Alonso" />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm"  pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" type="text" name="GuardianName" placeholder="Teodora Alonso" />
             </div>
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Relationship <span class="text-red-700"></span></label>
@@ -433,11 +438,11 @@
           <div class="flex gap-2">
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Allergy / Allergies</label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Allergy" placeholder="e.g. Peanuts, Milk, Soy" />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="text" name="Allergy" placeholder="e.g. None,Peanuts, Milk, Soy" required/>
             </div>
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Alcohol</label>
-              <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" name="Alcohol">
+              <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" name="Alcohol" required>
                 <option value="" disabled selected>Select Frequency</option>
                 <option value="never">Never</option>
                 <option value="occasional">Occasional</option>
@@ -448,11 +453,11 @@
           <div class="flex gap-2">
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Years of Smoking</label>
-              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="number" name="Years_of_Smoking" placeholder="0" min="0" />
+              <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" type="number" name="Years_of_Smoking" placeholder="0" min="0"required />
             </div>
             <div class="flex flex-col gap-1 flex-1">
               <label class="text-xs font-medium text-blue-950">Illicit Drug Use</label>
-              <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" name="IllicitDrugUse">
+              <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" name="IllicitDrugUse" required>
                 <option value="" disabled selected>Select</option>
                 <option value="none">None</option>
                 <option value="cocaine">Cocaine</option>
@@ -508,7 +513,7 @@
       </form>
     </div>
   </x-modal-garic>
-
+<!-- 
   {{-- ── Secretary Info Modal ──────────────────────────────────────────────── --}}
   <x-modal-garic id="account-secretary-info" title="Secretary Information" maxWidth="max-w-lg">
     <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">
@@ -537,12 +542,12 @@
         <div class="col-span-2">
           <label class="block mb-1 font-semibold text-blue-950/70">ADDRESS</label>
           <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-            name="Address" type="text">
+            name="Address" type="text" required>
         </div>
         <div>
           <label class="block mb-1 font-semibold text-blue-950/70">SEX</label>
           <select class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-            name="Gender">
+            name="Gender" required>
             <option value="">— Select —</option>
             <option value="Male">Male
 
@@ -561,7 +566,125 @@
         <i class="fa-solid fa-floppy-disk fa-xs me-2"></i>Save
       </button>
     </div>
-  </x-modal-garic>
+  </x-modal-garic> -->
+
+  {{-- ── Secretary Info Modal ──────────────────────────────────────────────── --}}
+<x-modal-garic id="account-secretary-info" title="Secretary Information" maxWidth="max-w-lg">
+
+  <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">
+    <img class="w-[200px] -my-12" src="{{ asset('assets/images/logo2.png') }}" alt="Logo">
+    <h1 class="font-semibold text-xl">SECRETARY INFORMATION</h1>
+  </div>
+
+  <form class="flex flex-col gap-3 overflow-y-auto max-h-[65vh] text-xs pe-2"
+        id="secretary-info-form">
+
+    @csrf
+    <input id="secretary_user_id" type="hidden" name="user_id">
+
+    <div class="grid grid-cols-3 gap-3">
+
+      {{-- LAST NAME (REQUIRED + PATTERN) --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">LAST NAME *</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="Lname"
+          type="text"
+          required
+          
+          pattern="^[A-Za-zñÑ]{2,100}$"
+          title="Letters only (2–100 characters)">
+      </div>
+
+      {{-- FIRST NAME (REQUIRED + PATTERN) --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">FIRST NAME *</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="Fname"
+          type="text"
+          required
+          pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"
+          title="Letters only (2–100 characters)">
+      </div>
+
+      {{-- MIDDLE NAME (OPTIONAL + PATTERN) --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">MIDDLE NAME</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="Mname"
+          type="text"
+          pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"
+          title="Letters only (2–100 characters)">
+      </div>
+
+      {{-- DATE OF BIRTH (REQUIRED) --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">BIRTHDATE *</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="DateofBirth"
+          type="date"
+          required>
+      </div>
+
+      {{-- CONTACT NUMBER (REQUIRED + 11 DIGITS) --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">CONTACT *</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="ContactNumber"
+          type="text"
+          required
+          maxlength="11"
+          inputmode="numeric"
+          pattern="^[0-9]{11}$"
+          title="Must be exactly 11 digits">
+      </div>
+
+      {{-- ASSIGNED ID --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">ASSIGNED ID</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="SecAssignedID"
+          type="text">
+      </div>
+
+      {{-- ADDRESS --}}
+      <div class="col-span-2">
+        <label class="block mb-1 font-semibold text-blue-950/70">ADDRESS</label>
+        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="Address"
+          type="text"
+          required>
+      </div>
+
+      {{-- SEX --}}
+      <div>
+        <label class="block mb-1 font-semibold text-blue-950/70">SEX</label>
+        <select class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
+          name="Gender"
+          required>
+          <option value="">— Select —</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+
+    </div>
+  </form>
+
+  {{-- ACTION BUTTONS --}}
+  <div class="mt-4 flex justify-end gap-2">
+    <button class="px-6 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-600/90"
+      data-modal-close="account-secretary-info" type="button">
+      Cancel
+    </button>
+
+    <button class="px-6 py-2 bg-blue-950 text-blue-100 rounded-md hover:bg-blue-950/90"
+      type="submit" form="secretary-info-form">
+      <i class="fa-solid fa-floppy-disk fa-xs me-2"></i>Save
+    </button>
+  </div>
+
+</x-modal-garic>
   {{-- ── Role Filter Modal ──────────────────────────────────────────────────── --}}
   <x-modal-garic id="account-role-filter" title="Filter by Role" maxWidth="max-w-[380px]">
     <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">

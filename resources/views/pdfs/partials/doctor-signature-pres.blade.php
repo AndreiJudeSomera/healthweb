@@ -19,7 +19,7 @@ $ptrNo = $doctor?->ptr_no ?? "__________________________";
 <div class="signature clearfix" style="position:absolute; bottom:0; left:50px; font-size:7px;">
   <div class="sig-right">
     <div class="sig-name">{{ $doctorName }}</div>
-    <div style="margin-top:6px;">License No: {{ $licenseNo }}</div>
-    <div style="margin-top:6px;">PTR No: {{ $ptrNo }}</div>
+    <div style="margin-top:3px;">License No: {{ $licenseNo }}</div>
+    <div style="margin-top:3px;">PTR No: {{ $ptrNo }}</div>
   </div>
 </div>

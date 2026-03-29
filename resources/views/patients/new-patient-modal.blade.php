@@ -77,17 +77,17 @@
           <div class="flex flex-col gap-1 flex-1">
             <label class="text-xs font-medium text-blue-950">Last Name <span class="text-red-700">*</span></label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="last_name" type="text"
-              name="last_name" placeholder="Rizal" required />
+              name="last_name" placeholder="Rizal" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers or symbols" required />
           </div>
           <div class="flex flex-col gap-1 flex-1">
             <label class="text-xs font-medium text-blue-950">First Name <span class="text-red-700">*</span></label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="first_name" type="text"
-              name="first_name" placeholder="Jose" required />
+              name="first_name" placeholder="Jose" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers or symbols" required />
           </div>
           <div class="flex flex-col gap-1 flex-1">
             <label class="text-xs font-medium text-blue-950">Middle Name</label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="middle_name" type="text"
-              name="middle_name" placeholder="Protacio" />
+              name="middle_name"pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers or symbols" placeholder="Protacio" />
           </div>
         </div>
 
@@ -109,7 +109,7 @@
           <div class="flex flex-col gap-1 flex-1">
             <label class="text-xs font-medium text-blue-950">Nationality <span class="text-red-700">*</span></label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="nationality" type="text"
-              name="nationality" placeholder="Filipino" required />
+              name="nationality" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers or symbols" placeholder="Filipino" required />
           </div>
         </div>
 
@@ -118,7 +118,7 @@
           <div class="flex flex-col gap-1 w-48">
             <label class="text-xs font-medium text-blue-950">Contact Number <span class="text-red-700">*</span></label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="contact_number" type="text"
-              name="contact_number" placeholder="09123456789"  maxlength="11" required />
+              name="contact_number" placeholder="09123456789"  maxlength="11" pattern="^[0-9]{11}$" required />
           </div>
           <div class="flex flex-col gap-1 flex-1">
             <label class="text-xs font-medium text-blue-950">Address <span class="text-red-700">*</span></label>
@@ -171,13 +171,13 @@
 
         <div class="flex gap-2">
           <div class="flex flex-col gap-1 flex-1">
-            <label class="text-xs font-medium text-blue-950">Allergy / Allergies</label>
+            <label class="text-xs font-medium text-blue-950">Allergy / Allergies<span class="text-red-700">*</span></label></label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="allergy" type="text"
-              name="allergy" placeholder="e.g. Peanuts, Milk, Soy" />
+              name="allergy" placeholder="e.g. None, Milk, Soy" required/>
           </div>
           <div class="flex flex-col gap-1 flex-1">
-            <label class="text-xs font-medium text-blue-950">Alcohol</label>
-            <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="alcohol" name="alcohol">
+            <label class="text-xs font-medium text-blue-950">Alcohol<span class="text-red-700">*</span></label>
+            <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="alcohol" name="alcohol" required>
               <option value="" disabled selected>Select Frequency</option>
               <option value="never">Never</option>
               <option value="occasional">Occasional</option>
@@ -188,14 +188,14 @@
 
         <div class="flex gap-2">
           <div class="flex flex-col gap-1 flex-1">
-            <label class="text-xs font-medium text-blue-950">Years of Smoking</label>
+            <label class="text-xs font-medium text-blue-950">Years of Smoking<span class="text-red-700">*</span></label>
             <input class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="years_of_smoking" type="number"
-              name="years_of_smoking" placeholder="0" min="0" />
+              name="years_of_smoking" placeholder="0" min="0" required/>
           </div>
           <div class="flex flex-col gap-1 flex-1">
-            <label class="text-xs font-medium text-blue-950">Illicit Drug Use</label>
+            <label class="text-xs font-medium text-blue-950">Illicit Drug Use<span class="text-red-700">*</span></label>
             <select class="border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="illicit_drug_use"
-              name="illicit_drug_use">
+              name="illicit_drug_use" required>
               <option value="" disabled selected>Select</option>
               <option value="none">None</option>
               <option value="coccaine">Cocaine</option>

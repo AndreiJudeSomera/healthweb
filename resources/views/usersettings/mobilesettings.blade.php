@@ -108,8 +108,8 @@
         @endforeach
       </div>
     @endif
-
-    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+<div x-data="passwordForm()" class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+    
       <form method="POST" action="{{ route('settings.password.update') }}">
         @csrf
         @method('PUT')
@@ -120,7 +120,7 @@
             <input type="password" name="current_password" required autocomplete="current-password"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
-          <div>
+          <!-- <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
             <input type="password" name="password" required autocomplete="new-password"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
@@ -130,7 +130,70 @@
             <input type="password" name="password_confirmation" required autocomplete="new-password"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
-        </div>
+        </div> -->
+
+                  <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">New Password</label>
+
+            <div class="relative">
+              <input
+                :type="showPwd ? 'text' : 'password'"
+                name="password"
+                x-model="password"
+                @input="updateStrength()"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+
+              <button type="button" @click="showPwd = !showPwd"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <i :class="showPwd ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"></i>
+              </button>
+            </div>
+
+            <!-- Strength Bar -->
+            <div class="flex gap-1 mt-2" x-show="password.length > 0" x-cloak>
+              <template x-for="i in 4" :key="i">
+                <div class="h-1 flex-1 rounded-full"
+                  :class="i <= strength
+                    ? (strength === 1 ? 'bg-red-400'
+                    : strength === 2 ? 'bg-amber-400'
+                    : strength === 3 ? 'bg-yellow-400'
+                    : 'bg-emerald-500')
+                    : 'bg-gray-200'">
+                </div>
+              </template>
+
+              <span class="text-xs ml-2 font-medium"
+                :class="strength === 1 ? 'text-red-500'
+                : strength === 2 ? 'text-amber-500'
+                : strength === 3 ? 'text-yellow-600'
+                : 'text-emerald-600'"
+                x-text="['', 'Weak', 'Fair', 'Good', 'Strong'][strength]">
+              </span>
+            </div>
+          </div>
+          <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
+
+              <div class="relative">
+                <input
+                  :type="showPwdConfirm ? 'text' : 'password'"
+                  name="password_confirmation"
+                  x-model="passwordConfirm"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm pr-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+
+                <button type="button" @click="showPwdConfirm = !showPwdConfirm"
+                  class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+                  <i :class="showPwdConfirm ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"></i>
+                </button>
+              </div>
+
+              <!-- Match Error -->
+              <p class="text-xs text-red-500 mt-1" x-show="passwordConfirm && passwordConfirm !== password">
+                Passwords do not match
+              </p>
+            </div>
 
         <button type="submit"
           class="mt-5 w-full py-2.5 bg-[#1F2B5B] text-white text-sm font-medium rounded-lg hover:bg-[#162046] transition">
@@ -138,6 +201,7 @@
         </button>
       </form>
     </div>
+  </div>
   </div>
 
   {{-- ===== UPDATE PROFILE SECTION ===== --}}
@@ -168,11 +232,13 @@
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
             <input type="text" name="username" value="{{ old('username', $user->username) }}" required
+            pattern="[A-Za-zÑñ]{3,30}"
+              title="Only letters"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="email" name="email" value="{{ old('email', $user->email) }}" required
+            <label class="block text-sm font-medium text-gray-700 mb-1 hidden">Email</label>
+            <input type="email" name="email" value="{{ old('email', $user->email) }}" required hidden
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
         </div>
@@ -195,30 +261,30 @@
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-              <input type="text" name="first_name" value="{{ old('first_name', $patientRecord?->first_name) }}"
+              <input type="text" name="first_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required value="{{ old('first_name', $patientRecord?->first_name) }}"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-              <input type="text" name="last_name" value="{{ old('last_name', $patientRecord?->last_name) }}"
+              <input type="text" name="last_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required value="{{ old('last_name', $patientRecord?->last_name) }}"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label>
-            <input type="text" name="middle_name" value="{{ old('middle_name', $patientRecord?->middle_name) }}"
+            <input type="text" name="middle_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" value="{{ old('middle_name', $patientRecord?->middle_name) }}"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-              <input type="date" name="date_of_birth"
+              <input type="date" name="date_of_birth" required
                 value="{{ old('date_of_birth', $patientRecord?->date_of_birth?->format('Y-m-d')) }}"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-              <select name="gender"
+              <select name="gender"  required
                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                 <option value="">— Select —</option>
                 @php $currentGender = strtolower(old('gender', $patientRecord?->gender) ?? ''); @endphp
@@ -229,17 +295,17 @@
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Nationality</label>
-            <input type="text" name="nationality" value="{{ old('nationality', $patientRecord?->nationality) }}"
+            <input type="text" name="nationality" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required value="{{ old('nationality', $patientRecord?->nationality) }}"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
-            <input type="text" name="contact_number" value="{{ old('contact_number', $patientRecord?->contact_number) }}"
+            <input type="text" name="contact_number"  pattern="^[0-9]{11}$" maxlength="11" required value="{{ old('contact_number', $patientRecord?->contact_number) }}"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-            <textarea name="address" rows="2"
+            <textarea name="address" required rows="2"
               class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('address', $patientRecord?->address) }}</textarea>
           </div>
         </div>
@@ -341,6 +407,29 @@
 </div>
 
 <script>
+ 
+document.addEventListener('alpine:init', () => {
+  Alpine.data('passwordForm', () => ({
+    password: '',
+    passwordConfirm: '',
+    showPwd: false,
+    showPwdConfirm: false,
+    strength: 0,
+
+    updateStrength() {
+      let p = this.password;
+      let score = 0;
+
+      if (p.length >= 8) score++;
+      if (/[A-Z]/.test(p)) score++;
+      if (/[a-z]/.test(p)) score++;
+      if (/[0-9]/.test(p)) score++;
+
+      this.strength = score;
+    }
+  }));
+});
+
   function settingsApp() {
     return {
       section: '{{ $errors->updatePassword->any() ? "password" : ($errors->any() ? "profile" : "hub") }}',

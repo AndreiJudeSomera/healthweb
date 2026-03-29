@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
+
 
 class AccountController extends Controller {
   public function index() {
@@ -222,16 +225,104 @@ public function store(Request $request)
   //   return response()->json(['message' => 'Patient information updated successfully.']);
   // }
 
-  public function updatePatientInfo(Request $request, $id) {
-    // Get patient first
+//   public function updatePatientInfo(Request $request, $id) {
+//     // Get patient first
+//     $patient = Patient::where('user_id', $id)->firstOrFail();
+
+//     // ❗ Prevent old patients from creating new record if not bound
+//       if ($patient->patient_type === 'old' && is_null($patient->record_id)) {
+//           return response()->json([
+//               'message' => 'This account already has an existing Clinical record. Please bind record'
+//           ], 403);
+//       }
+
+//     // Validate input
+//     $validator = Validator::make($request->all(), [
+//         'Fname'       => 'required|string',
+//         'Lname'       => 'required|string',
+//         'DateofBirth' => 'required|date',
+//     ]);
+
+  
+//     // Stop if validation fails
+//     if ($validator->fails()) {
+//         return response()->json(['errors' => $validator->errors()], 422);
+//     }
+
+//     $familyHistory = $request->input('family_history', []);
+
+//     // Check if record exists, if not create one
+//     if (!$patient->record) {
+//         $record = PatientRecord::create([
+//         'first_name'        => $request->Fname,
+//         'last_name'         => $request->Lname,
+//         'middle_name'       => $request->Mname,
+//         'gender'            => $request->Gender,
+//         'date_of_birth'     => $request->DateofBirth,
+//         'nationality'       => $request->Nationality,
+//         'contact_number'    => $request->ContactNumber,
+//         'address'           => $request->Address,
+//         'guardian_name'     => $request->GuardianName,
+//         'guardian_relation' => $request->GuardianRelation,
+//         'guardian_contact'  => $request->GuardianContact,
+//         'allergy'           => $request->input('Allergy', 'None'),
+//         'alcohol'           => $request->input('Alcohol', 'None'),
+//         'years_of_smoking'  => $request->Years_of_Smoking ?: 0,
+//         'illicit_drug_use'  => $request->IllicitDrugUse,
+//         'hypertension'      => in_array('Hypertension', $familyHistory),
+//         'asthma'            => in_array('Asthma', $familyHistory),
+//         'diabetes'          => in_array('Diabetes', $familyHistory),
+//         'cancer'            => in_array('Cancer', $familyHistory),
+//         'thyroid'           => in_array('Thyroid', $familyHistory),
+//         'others'            => $request->family_history_other,
+            
+//             // you can leave other fields empty or default for now
+//         ]);
+//         $patient->record_id = $record->id;
+//         $patient->save();
+//     } else {
+//         $record = $patient->record;
+//     }
+
+//     // Update the record
+//     $record->update([
+//         'first_name'        => $request->Fname,
+//         'last_name'         => $request->Lname,
+//         'middle_name'       => $request->Mname,
+//         'gender'            => $request->Gender,
+//         'date_of_birth'     => $request->DateofBirth,
+//         'nationality'       => $request->Nationality,
+//         'contact_number'    => $request->ContactNumber,
+//         'address'           => $request->Address,
+//         'guardian_name'     => $request->GuardianName,
+//         'guardian_relation' => $request->GuardianRelation,
+//         'guardian_contact'  => $request->GuardianContact,
+//         'allergy'           => $request->input('Allergy', 'None'),
+//         'alcohol'           => $request->input('Alcohol', 'None'),
+//         'years_of_smoking'  => $request->Years_of_Smoking ?: 0,
+//         'illicit_drug_use'  => $request->IllicitDrugUse,
+//         'hypertension'      => in_array('Hypertension', $familyHistory),
+//         'asthma'            => in_array('Asthma', $familyHistory),
+//         'diabetes'          => in_array('Diabetes', $familyHistory),
+//         'cancer'            => in_array('Cancer', $familyHistory),
+//         'thyroid'           => in_array('Thyroid', $familyHistory),
+//         'others'            => $request->family_history_other,
+//     ]);
+
+//     return response()->json(['message' => 'Patient information updated successfully.']);
+// }
+
+
+public function updatePatientInfo(Request $request, $id)
+{
     $patient = Patient::where('user_id', $id)->firstOrFail();
 
     // ❗ Prevent old patients from creating new record if not bound
-      if ($patient->patient_type === 'old' && is_null($patient->record_id)) {
-          return response()->json([
-              'message' => 'This account already has an existing Clinical record. Please bind record'
-          ], 403);
-      }
+    if ($patient->patient_type === 'old' && is_null($patient->record_id)) {
+        return response()->json([
+            'message' => 'This account already has an existing Clinical record. Please bind record'
+        ], 403);
+    }
 
     // Validate input
     $validator = Validator::make($request->all(), [
@@ -240,91 +331,116 @@ public function store(Request $request)
         'DateofBirth' => 'required|date',
     ]);
 
-    // // Step 1: Add duplicate check if patient has no record
-    $validator->after(function ($validator) use ($request, $patient) {
-        // Only check duplicates if patient has no record yet
-        if (!$patient->record) {
-            $firstName = trim(strtolower($request->Fname));
-            $lastName  = trim(strtolower($request->Lname));
-            $dob       = $request->DateofBirth;
-
-            $exists = PatientRecord::whereRaw('LOWER(TRIM(first_name)) = ?', [$firstName])
-                ->whereRaw('LOWER(TRIM(last_name)) = ?', [$lastName])
-                ->where('date_of_birth', $dob)
-                ->exists();
-
-            if ($exists) {
-                $validator->errors()->add('patient', 'Patient record already exists in the clinic.');
-            }
-        }
-    });
-
-    // Stop if validation fails
     if ($validator->fails()) {
         return response()->json(['errors' => $validator->errors()], 422);
     }
 
     $familyHistory = $request->input('family_history', []);
 
-    // Check if record exists, if not create one
-    if (!$patient->record) {
-        $record = PatientRecord::create([
-        'first_name'        => $request->Fname,
-        'last_name'         => $request->Lname,
-        'middle_name'       => $request->Mname,
-        'gender'            => $request->Gender,
-        'date_of_birth'     => $request->DateofBirth,
-        'nationality'       => $request->Nationality,
-        'contact_number'    => $request->ContactNumber,
-        'address'           => $request->Address,
-        'guardian_name'     => $request->GuardianName,
-        'guardian_relation' => $request->GuardianRelation,
-        'guardian_contact'  => $request->GuardianContact,
-        'allergy'           => $request->input('Allergy', 'None'),
-        'alcohol'           => $request->input('Alcohol', 'None'),
-        'years_of_smoking'  => $request->Years_of_Smoking ?: 0,
-        'illicit_drug_use'  => $request->IllicitDrugUse,
-        'hypertension'      => in_array('Hypertension', $familyHistory),
-        'asthma'            => in_array('Asthma', $familyHistory),
-        'diabetes'          => in_array('Diabetes', $familyHistory),
-        'cancer'            => in_array('Cancer', $familyHistory),
-        'thyroid'           => in_array('Thyroid', $familyHistory),
-        'others'            => $request->family_history_other,
-            
-            // you can leave other fields empty or default for now
-        ]);
-        $patient->record_id = $record->id;
-        $patient->save();
-    } else {
-        $record = $patient->record;
+    /*
+    |--------------------------------------------------------------------------
+    | SENTENCE CASE NORMALIZATION
+    |--------------------------------------------------------------------------
+    */
+
+    $firstName = $this->toSentenceCase($request->Fname);
+    $lastName  = $this->toSentenceCase($request->Lname);
+    $middleName = $request->Mname ? $this->toSentenceCase($request->Mname) : null;
+
+    /*
+    |--------------------------------------------------------------------------
+    | DUPLICATE CHECK (case-insensitive)
+    |--------------------------------------------------------------------------
+    */
+
+    $duplicate = PatientRecord::whereDate('date_of_birth', $request->DateofBirth)
+        ->get()
+        ->first(function ($record) use ($firstName, $lastName, $patient) {
+            return $record->id !== optional($patient->record)->id &&
+                mb_strtolower(trim($record->first_name)) === mb_strtolower(trim($firstName)) &&
+                mb_strtolower(trim($record->last_name)) === mb_strtolower(trim($lastName));
+        });
+
+    if ($duplicate) {
+        return response()->json([
+            'message' => 'Patient record already exists.'
+        ], 409);
     }
 
-    // Update the record
-    $record->update([
-        'first_name'        => $request->Fname,
-        'last_name'         => $request->Lname,
-        'middle_name'       => $request->Mname,
-        'gender'            => $request->Gender,
-        'date_of_birth'     => $request->DateofBirth,
-        'nationality'       => $request->Nationality,
-        'contact_number'    => $request->ContactNumber,
-        'address'           => $request->Address,
-        'guardian_name'     => $request->GuardianName,
-        'guardian_relation' => $request->GuardianRelation,
-        'guardian_contact'  => $request->GuardianContact,
-        'allergy'           => $request->input('Allergy', 'None'),
-        'alcohol'           => $request->input('Alcohol', 'None'),
-        'years_of_smoking'  => $request->Years_of_Smoking ?: 0,
-        'illicit_drug_use'  => $request->IllicitDrugUse,
-        'hypertension'      => in_array('Hypertension', $familyHistory),
-        'asthma'            => in_array('Asthma', $familyHistory),
-        'diabetes'          => in_array('Diabetes', $familyHistory),
-        'cancer'            => in_array('Cancer', $familyHistory),
-        'thyroid'           => in_array('Thyroid', $familyHistory),
-        'others'            => $request->family_history_other,
-    ]);
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE OR UPDATE RECORD
+    |--------------------------------------------------------------------------
+    */
 
-    return response()->json(['message' => 'Patient information updated successfully.']);
+    if (!$patient->record) {
+        $record = PatientRecord::create([
+            'first_name'        => $firstName,
+            'last_name'         => $lastName,
+            'middle_name'       => $middleName,
+            'gender'            => $request->Gender,
+            'date_of_birth'     => $request->DateofBirth,
+            'nationality'       => $request->Nationality,
+            'contact_number'    => $request->ContactNumber,
+            'address'           => $request->Address,
+            'guardian_name'     => $request->GuardianName,
+            'guardian_relation' => $request->GuardianRelation,
+            'guardian_contact'  => $request->GuardianContact,
+            'allergy'           => $request->input('Allergy', 'None'),
+            'alcohol'           => $request->input('Alcohol', 'None'),
+            'years_of_smoking'  => $request->Years_of_Smoking ?: 0,
+            'illicit_drug_use'  => $request->IllicitDrugUse,
+            'hypertension'      => in_array('Hypertension', $familyHistory),
+            'asthma'            => in_array('Asthma', $familyHistory),
+            'diabetes'          => in_array('Diabetes', $familyHistory),
+            'cancer'            => in_array('Cancer', $familyHistory),
+            'thyroid'           => in_array('Thyroid', $familyHistory),
+            'others'            => $request->family_history_other,
+        ]);
+
+        $patient->record_id = $record->id;
+        $patient->save();
+
+    } else {
+        $record = $patient->record;
+
+        $record->update([
+            'first_name'        => $firstName,
+            'last_name'         => $lastName,
+            'middle_name'       => $middleName,
+            'gender'            => $request->Gender,
+            'date_of_birth'     => $request->DateofBirth,
+            'nationality'       => $request->Nationality,
+            'contact_number'    => $request->ContactNumber,
+            'address'           => $request->Address,
+            'guardian_name'     => $request->GuardianName,
+            'guardian_relation' => $request->GuardianRelation,
+            'guardian_contact'  => $request->GuardianContact,
+            'allergy'           => $request->input('Allergy', 'None'),
+            'alcohol'           => $request->input('Alcohol', 'None'),
+            'years_of_smoking'  => $request->Years_of_Smoking ?: 0,
+            'illicit_drug_use'  => $request->IllicitDrugUse,
+            'hypertension'      => in_array('Hypertension', $familyHistory),
+            'asthma'            => in_array('Asthma', $familyHistory),
+            'diabetes'          => in_array('Diabetes', $familyHistory),
+            'cancer'            => in_array('Cancer', $familyHistory),
+            'thyroid'           => in_array('Thyroid', $familyHistory),
+            'others'            => $request->family_history_other,
+        ]);
+    }
+
+    return response()->json([
+        'message' => 'Patient information updated successfully.'
+    ]);
+}
+
+private function toSentenceCase($value)
+{
+    if (!$value) return $value;
+
+    return collect(explode(' ', trim($value)))
+        ->map(fn($word) => ucfirst(strtolower($word)))
+        ->implode(' ');
 }
 
   public function getSecretaryInfo($id) {
@@ -377,7 +493,8 @@ public function store(Request $request)
     return response()->json(['message' => 'Secretary information updated successfully.']);
   }
 
-  public function storePatientInfo(Request $request) {
+  public function storePatientInfo(Request
+   $request) {
     $validator = Validator::make($request->all(), [
       'user_id' => 'required|exists:users,id',
       'Fname' => 'required|string',
@@ -385,28 +502,7 @@ public function store(Request $request)
       'DateofBirth' => 'required|date',
     ]);
 
-      // Step 2: Add duplicate check after basic validation
-    $validator->after(function ($validator) use ($request) {
-        $firstName = trim(strtolower($request->Fname));
-        $lastName = trim(strtolower($request->Lname));
-        $dob = $request->DateofBirth;
-
-        $exists = PatientRecord::whereRaw('LOWER(TRIM(first_name)) = ?', [$firstName])
-            ->whereRaw('LOWER(TRIM(last_name)) = ?', [$lastName])
-            ->where('date_of_birth', $dob)
-            ->exists();
-
-        if ($exists) {
-            // Add error to a specific field (or 'patient' as general)
-            $validator->errors()->add('patient', 'Patient record already exists in the clinic.');
-        }
-    });
-
-    // Step 3: Stop execution if validation fails
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
-    }
-
+     
     $familyHistory = $request->input('family_history', []);
 
     DB::transaction(function () use ($request, $familyHistory) {
@@ -542,8 +638,8 @@ public function store(Request $request)
     $validator = Validator::make($request->all(), [
       'Fname'         => 'required|string',
       'Lname'         => 'required|string',
-      'dr_license_no' => 'required|string|max:50',
-      'ptr_no'        => 'required|string|max:50',
+      'dr_license_no' => ['required', 'regex:/^[0-9]+$/', 'max:50'],
+      'ptr_no'        => ['required', 'regex:/^[0-9]+$/', 'max:50'],
     ]);
 
     if ($validator->fails()) {

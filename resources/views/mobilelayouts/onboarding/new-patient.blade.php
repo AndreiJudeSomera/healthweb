@@ -72,19 +72,19 @@
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">Last Name <span class="text-red-800 font-bold">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="last_name" type="text"
-            name="last_name" pattern="^[A-Za-z\s'.\-]{2,100}$" placeholder="Mercado" required />
+            name="last_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers"placeholder="Mercado" required />
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">First Name <span class="text-red-800 font-bold">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="first_name" type="text"
-            name="first_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"  placeholder="Jose" required />
+            name="first_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"  title="Dont include numbers" placeholder="Jose" required />
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">Middle Name</label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="middle_name" type="text"
-            name="middle_name" pattern="^[A-Za-z\s'.\-]{2,100}$" placeholder="Protacio" />
+            name="middle_name" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers"placeholder="Protacio" />
         </div>
 
         <div class="flex flex-col gap-1">
@@ -105,13 +105,13 @@
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">Nationality <span class="text-red-800 font-bold">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="nationality" type="text"
-            name="nationality" pattern="^[A-Za-z\s'.\-]{2,100}$" placeholder="Filipino" required />
+            name="nationality" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" title="Dont include numbers" placeholder="Filipino" required />
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">Contact Number <span class="text-red-800 font-bold">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="contact_number" type="text"
-            name="contact_number" placeholder="09123456789" maxlength="11" required />
+            name="contact_number" placeholder="09123456789" maxlength="11"  pattern="^[0-9]{11}$"  required />
         </div>
 
         <div class="flex flex-col gap-1">
@@ -123,7 +123,7 @@
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">Guardian Name <span class="text-red-800 font-bold"></span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="guardian_name" type="text"
-            name="guardian_name" pattern="^[A-Za-z\s'.\-]{2,100}$" placeholder="Teodora Alonso Realonda" />
+            name="guardian_name"pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" placeholder="Teodora Alonso Realonda" />
         </div>
 
         <div class="flex flex-col gap-1">
@@ -161,14 +161,14 @@
       <div id="ob-step-2" x-show="step === 2" class="flex flex-col gap-3">
 
         <div class="flex flex-col gap-1">
-          <label class="font-medium text-blue-950 text-sm">Allergy / Allergies</label>
+          <label class="font-medium text-blue-950 text-sm">Allergy / Allergies<span class="text-red-800 font-bold">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="allergy" type="text"
-            name="allergy" placeholder="e.g. Peanuts, Milk, Soy or None" />
+            name="allergy" placeholder="e.g None,Peanuts, Milk, Soy" required/>
         </div>
 
         <div class="flex flex-col gap-1">
-          <label class="font-medium text-blue-950 text-sm">Alcohol</label>
-          <select class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="alcohol" name="alcohol">
+          <label class="font-medium text-blue-950 text-sm">Alcohol<span class="text-red-800 font-bold">*</span></label>
+          <select class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="alcohol" name="alcohol" required>
             <option value="" disabled selected>Select Frequency</option>
             <option value="never">Never</option>
             <option value="occasional">Occasional</option>
@@ -177,15 +177,15 @@
         </div>
 
         <div class="flex flex-col gap-1">
-          <label class="font-medium text-blue-950 text-sm">Years of Smoking</label>
+          <label class="font-medium text-blue-950 text-sm">Years of Smoking<span class="text-red-800 font-bold">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="years_of_smoking" type="number"
-            name="years_of_smoking" placeholder="0" min="0" />
+            name="years_of_smoking" placeholder="0 if none smoker" min="0" required/>
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="font-medium text-blue-950 text-sm">Illicit Drug Use</label>
           <select class="w-full border-2 border-blue-950 rounded-md px-3 py-2 text-sm" id="illicit_drug_use"
-            name="illicit_drug_use">
+            name="illicit_drug_use" required>
             <option value="" disabled selected>Select</option>
             <option value="none">None</option>
             <option value="coccaine">Cocaine</option>

@@ -181,10 +181,48 @@ patientSearch.addEventListener("input", (e) => {
 });
 
 const newPatientForm = document.getElementById("patient_add_form");
-newPatientForm.addEventListener("submit", (e) => {
-  toastr.success("New patient successfully added", "Success");
-});
+// newPatientForm.addEventListener("submit", (e) => {
+//   toastr.success("New patient successfully added", "Success");
+// });
 
+newPatientForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(newPatientForm);
+
+  try {
+    const res = await fetch("/patients", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: formData
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw data;
+    }
+
+    toastr.success(data.message, "Success");
+    
+ 
+    window.location.reload();
+
+  } catch (err) {
+
+    if (err.errors) {
+      Object.keys(err.errors).forEach(field => {
+        toastr.error(err.errors[field][0], "Validation Error");
+      });
+      return;
+    }
+
+    toastr.error(err.message || "Something went wrong", "Error");
+  }
+});
 window.filterPatientsBySex = (value) => {
   patientsTable.column(4).search(value ? `^${value}$` : "", true, false).draw();
 };

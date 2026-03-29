@@ -173,9 +173,9 @@ const patientsTable = new DataTable("#patientAppointmentsTable", {
               class="dt-action flex items-center justify-center border-2 border-red-800 text-red-800 hover:bg-red-100 rounded-md size-8"
               data-modal-open="delete-record"
               data-action="delete"
-              title="Cancel appointment"
+              title="Delete appointment"
               data-pid="${row.id ?? ""}">
-              <i class="fa-solid fa-ban fa-sm"></i>
+              <i class="fa-solid fa-trash fa-sm"></i>
             </button>
           </div>
         `;

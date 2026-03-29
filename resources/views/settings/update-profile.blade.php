@@ -36,8 +36,8 @@
               name="username"
               value="{{ old('username', $user->username) }}"
               required
-              pattern="[A-Za-zÑñ ]{3,30}"
-              title="Only letters (A–Z, Ñ/ñ) and spaces, 3–30 characters"
+              pattern="[A-Za-zÑñ]{3,30}"
+              title="Only letters, dont include numbers"
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
             @error('username')
@@ -45,8 +45,8 @@
             @enderror
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input type="email" name="email" value="{{ old('email', $user->email) }}" required
+            <label class="block text-sm font-medium text-gray-700 mb-1 hidden">Email</label>
+            <input type="email" name="email" value="{{ old('email', $user->email) }}" required hidden
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
         </div>
@@ -70,31 +70,31 @@
         <div class="space-y-5">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-              <input type="text" name="Fname" value="{{ old('Fname', $clinicStaff?->Fname) }}"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <label class="block text-sm font-medium text-gray-700 mb-1">First Name<span class="text-red-800 font-medium">*</span></label>
+              <input type="text" name="Fname" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required  value="{{ old('Fname', $clinicStaff?->Fname) }}"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 required">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-              <input type="text" name="Lname" value="{{ old('Lname', $clinicStaff?->Lname) }}"
+              <label class="block text-sm font-medium text-gray-700 mb-1">Last Name<span class="text-red-800 font-medium">*</span></label>
+              <input type="text" name="Lname" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" required value="{{ old('Lname', $clinicStaff?->Lname) }}"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
           </div>
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label>
-            <input type="text" name="Mname" value="{{ old('Mname', $clinicStaff?->Mname) }}"
+            <input type="text" name="Mname" pattern="^[A-Za-zñÑ\s'.\-]{2,100}$" value="{{ old('Mname', $clinicStaff?->Mname) }}"
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-              <input type="date" name="DateofBirth"
+              <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth<span class="text-red-800 font-medium">*</span></label>
+              <input type="date" name="DateofBirth" required
                 value="{{ old('DateofBirth', $clinicStaff?->DateofBirth ? \Carbon\Carbon::parse($clinicStaff->DateofBirth)->format('Y-m-d') : '') }}"
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-              <select name="Gender"
+              <label class="block text-sm font-medium text-gray-700 mb-1">Gender<span class="text-red-800 font-medium">*</span></label>
+              <select name="Gender" required
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
                 <option value="">— Select —</option>
                 <option value="Male" @selected(old('Gender', $clinicStaff?->Gender) === 'Male')>Male</option>
@@ -103,16 +103,46 @@
             </div>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
-            <input type="text" name="ContactNumber" value="{{ old('ContactNumber', $clinicStaff?->ContactNumber) }}" maxlength="11" required
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contact Number<span class="text-red-800 font-bold">*</span></label>
+            <input type="text" name="ContactNumber" value="{{ old('ContactNumber', $clinicStaff?->ContactNumber) }}" maxlength="11"  pattern="^[0-9]{11}$" required
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-            <textarea name="Address" rows="2"
+            <label class="block text-sm font-medium text-gray-700 mb-1">Address<span class="text-red-800 font-medium">*</span></label>
+            <textarea name="Address" required rows="2"
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('Address', $clinicStaff?->Address) }}</textarea>
           </div>
         </div>
+        {{-- License Details --}}
+         
+@if($user->role == 2)
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    
+      <div class="mb-1">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          License Number
+        </label>
+        <input type="text" name="dr_license_no" placeholder="e.g. 0123456 " pattern="^\d+$" required
+          value="{{ old('dr_license_no', $doctor->dr_license_no ?? '') }}"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <p class="hidden text-red-600 text-xs" data-error="dr_license_no"></p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          PTR Number
+        </label>
+        <input type="text" name="ptr_no" placeholder="e.g. 0123456 " pattern="^\d+$" required
+          value="{{ old('ptr_no', $doctor->ptr_no ?? '') }}"
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <p class="hidden text-red-600 text-xs" data-error="ptr_no"></p>
+      </div>
+    </div>
+   
+ 
+@endif
+
+        
 
         <div class="mt-6 flex justify-end">
           <button type="submit"
@@ -122,6 +152,8 @@
         </div>
       </form>
     </div>
+
+    
 
   </div>
 </main>

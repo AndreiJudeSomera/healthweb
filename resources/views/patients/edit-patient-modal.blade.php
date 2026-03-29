@@ -125,14 +125,14 @@
           <label class="font-medium text-blue-950" for="edit_allergy">Allergy/Allergies<span
               class="font-bold text-red-800 ms-1">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_allergy" type="text"
-            name="allergy" pattern="^[A-Za-z\s'.\-,]{2,100}$" placeholder="e.g. Peanuts, Milk, Soy" required />
+            name="allergy" pattern="^[A-Za-z\s'.\-,]{2,100}$" placeholder="e.g. Peanuts, Milk, Soy"  />
           <p class="hidden text-red-700" id="edit_error_allergy"></p>
         </div>
         <div class="flex flex-col gap-1 w-full" id="edit_field_alcohol">
           <label class="font-medium text-blue-950" for="edit_alcohol">Alcohol<span
               class="font-bold text-red-800 ms-1">*</span></label>
           <select class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_alcohol" name="alcohol"
-            required>
+            >
             <option disabled selected hidden>Select Frequency</option>
             <option value="never">Never</option>
             <option value="occasional">Occasional</option>
@@ -144,14 +144,14 @@
           <label class="font-medium text-blue-950" for="edit_years_of_smoking">Years of Smoking<span
               class="font-bold text-red-800 ms-1">*</span></label>
           <input class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_years_of_smoking"
-            type="number" name="years_of_smoking" placeholder="0" required />
+            type="number" name="years_of_smoking" placeholder="0"  />
           <p class="hidden text-red-700" id="edit_error_years_of_smoking"></p>
         </div>
         <div class="flex flex-col gap-1 w-full" id="edit_field_illicit_drug_use">
           <label class="font-medium text-blue-950" for="edit_allergy">Illicit Drug Use<span
               class="font-bold text-red-800 ms-1">*</span></label>
           <select class="w-full border-2 border-blue-950 rounded-md px-3 py-2" id="edit_illicit_drug_use"
-            name="illicit_drug_use" required>
+            name="illicit_drug_use" >
             <option disabled selected hidden>Select Illicit Drugs</option>
             <option value="none">None</option>
             <option value="coccaine">Coccaine</option>

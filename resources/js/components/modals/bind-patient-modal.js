@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     create: false,
     placeholder: "Search user ...",
     valueField: "value",
-    labelFiled: "text",
+    labelField: "text",
     searchField: ["text"],
   });
 
@@ -140,8 +140,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch(
-        `/patients/bind/${encodeURIComponent(userSelect.value)}`,
+      const userId = userSelect.getValue();
+
+if (!userId) {
+  toastr?.error?.("Please select a user.");
+  return;
+}
+
+const res = await fetch(
+  `/patients/bind/${encodeURIComponent(userId)}`,
         {
           method: "POST",
           headers: {

@@ -6,15 +6,21 @@
     typeFilter: '',
     records: {{ Js::from($consultations) }},
     get filtered() {
-      const s = this.search.toLowerCase();
-      return this.records.filter(r => {
-        const matchSearch = !s
-          || r.document_type?.toLowerCase().includes(s)
-          || r.created_at?.toLowerCase().includes(s);
-        const matchType = !this.typeFilter ||  r.document_type?.toLowerCase().trim() === this.typeFilter;
-        return matchSearch && matchType;
-      });
-    },
+  const s = this.search.toLowerCase();
+
+  return this.records
+    .slice() // clone array to avoid mutating original
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // DESC
+    .filter(r => {
+      const matchSearch = !s
+        || r.document_type?.toLowerCase().includes(s)
+        || r.created_at?.toLowerCase().includes(s);
+
+      const matchType = !this.typeFilter || r.document_type?.toLowerCase().trim() === this.typeFilter;
+
+      return matchSearch && matchType;
+    });
+},
   }"
   class="h-full w-full max-w-[800px] min-w-[200px] flex-none mx-auto px-2 pb-6"
 >

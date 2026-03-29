@@ -203,7 +203,7 @@
             if (v.trim().length > 30) return 'Username must not exceed 30 characters.';
             // if (!/^[a-zA-Z0-9_]+$/.test(v.trim())) return 'Only letters, numbers, and underscores allowed.';
             // return '';
-            if (!/^[a-zA-ZñÑ]+$/i.test(v.trim())) return 'Only letters allowed (A-Z, a-z, Ñ, ñ).';
+            if (!/^[a-zA-ZñÑ]+$/i.test(v.trim())) return 'Only letters allowed.';
             return '';
           },
           password(v) {

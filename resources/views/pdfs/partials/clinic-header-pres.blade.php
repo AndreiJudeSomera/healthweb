@@ -27,7 +27,7 @@
     </div>
        <div style="margin-top:2px; font-size:7px;">Science City of Muñoz, Nueva Ecija</div>
        <div style="margin-top:2px; font-size:7px;">Contact Number: 0933-011-7725</div>
-       <div style="margin-top:2px; font-size:7px;">Friday - Monday</div>
+       <div style="margin-top:2px; font-size:7px;">Monday - Sunday</div>
       <div style="margin-top:2px; font-size:7px;">8:00 AM - 4:00 PM</div>
   </div>
 </div>

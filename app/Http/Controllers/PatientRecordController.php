@@ -68,28 +68,56 @@ class PatientRecordController extends Controller {
     return response()->json($data);
   }
 
-  public function store(StorePatientRecordRequest $request, AuditLogService $audit) {
-   $patient = PatientRecord::create([
-  ...$request->validated(),
-  'patient_type' => 'old',
-]);
+//   public function store(StorePatientRecordRequest $request, AuditLogService $audit) {
+
+//    $validated = $request->validated();
+
+//    $patient = PatientRecord::create([
+//   ...$request->validated(),
+//   'patient_type' => 'old',
+// ]);
+
+//     $audit->log(
+//       action: 'patient_record.create_staff',
+//       userId: auth()->id(),
+//       entityType: 'PatientRecord',
+//       entityId: $patient->id,
+//       meta: [
+//         'pid' => $patient->pid ?? null,
+//         'created_via' => 'staff',
+//       ]
+//     );
+
+//     return redirect()
+//       ->route('patients.index')
+//       ->with('success', 'Patient record created successfully! PID: '
+//         . $patient->pid);
+//   }
+public function store(StorePatientRecordRequest $request, AuditLogService $audit)
+{
+    $data = $request->validated();
+
+    $patient = PatientRecord::create([
+        ...$data,
+        'patient_type' => 'old',
+    ]);
 
     $audit->log(
-      action: 'patient_record.create_staff',
-      userId: auth()->id(),
-      entityType: 'PatientRecord',
-      entityId: $patient->id,
-      meta: [
-        'pid' => $patient->pid ?? null,
-        'created_via' => 'staff',
-      ]
+        action: 'patient_record.create_staff',
+        userId: auth()->id(),
+        entityType: 'PatientRecord',
+        entityId: $patient->id,
+        meta: [
+            'pid' => $patient->pid ?? null,
+            'created_via' => 'staff',
+        ]
     );
 
-    return redirect()
-      ->route('patients.index')
-      ->with('success', 'Patient record created successfully! PID: '
-        . $patient->pid);
-  }
+    return response()->json([
+        'message' => 'Patient created successfully',
+        'pid' => $patient->pid,
+    ]);
+}
 
   public function update(UpdatePatientRecordRequest $request, string $pid, AuditLogService $audit) {
     $patient = PatientRecord::where('pid', $pid)->first();
@@ -174,29 +202,27 @@ class PatientRecordController extends Controller {
 
   public function documentShow(PatientRecord $patient) {
     return view('patients.show-documents.documents-index', compact('patient'));
+  }public function getOldPatients() {
+  $patients = PatientRecord::query()
+    ->where('patient_type', 'old')
+    ->where('is_bound', 0)
+    ->get()
+    ->map(function ($p) {
+      return [
+        ...$p->toArray(),
+        "p_first_name" => $p->first_name,
+        "p_last_name" => $p->last_name,
+      ];
+    });
+
+  if ($patients->isEmpty()) {
+    return response()->json([
+      "data" => "Patient not found.",
+    ]);
   }
 
-  public function getOldPatients() {
-    $patients = PatientRecord::query()
-      ->where('patient_type', 'old')
-      ->get()
-      ->map(function ($p) {
-        return [
-           ...$p->toArray(),
-          "p_first_name" => $p->first_name,
-          "p_last_name" => $p->last_name,
-        ];
-      });
-
-    if (!$patients) {
-      return response()->json([
-        "data" => "Patient not found.",
-      ]);
-    }
-
-    return response()->json($patients);
-  }
-
+  return response()->json($patients);
+}
   public function getNewUsers() {
     $patients = Patient::with('user')
       ->where('record_id', null)

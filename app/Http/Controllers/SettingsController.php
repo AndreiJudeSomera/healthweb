@@ -53,8 +53,11 @@ class SettingsController extends Controller
         $user = Auth::user();
         $isPatient = $this->isPatient();
         $clinicStaff = $isPatient ? null : ClinicStaff::where('user_id', $user->id)->first();
+        $doctor = Doctor::where('user_id', $user->id)->first(); // 👈 ADD THIS
+        
+
         $view = $isPatient ? 'usersettings.update-profile' : 'settings.update-profile';
-        return view($view, compact('user', 'clinicStaff'));
+      return view($view, compact('user', 'clinicStaff', 'doctor'));
     }
   
     public function helpGuide()
@@ -108,6 +111,34 @@ public function updateProfile(Request $request)
         ->with('status', 'profile-updated');
 }
 
+public function updateLicense(Request $request)
+{
+     // ✅ ADD THIS LINE
+   
+    $user = Auth::user();
+ $doctor = Doctor::where('user_id', $user->id)->first();
+    // Only allow role 2
+    if ($user->role != 2) {
+        abort(403);
+    }
+
+    $request->validate([
+        'dr_license_no' => 'required|string|max:100',
+        'ptr_no'        => 'required|string|max:100',
+    ]);
+
+    Doctor::updateOrCreate(
+        ['user_id' => $user->id],
+        [
+            'dr_license_no' => $request->dr_license_no,
+            'ptr_no'        => $request->ptr_no,
+        ]
+    );
+
+    return redirect()->route('settings.setting')
+        ->with('status', 'license-updated');
+}
+
     public function updateRecord(Request $request)
     {
         $user = Auth::user();
@@ -147,6 +178,23 @@ public function updateProfile(Request $request)
             ClinicStaff::where('user_id', $user->id)->update($request->only([
                 'Fname', 'Lname', 'Mname', 'ContactNumber', 'Address', 'DateofBirth', 'Gender',
             ]));
+            // ✅ NEW: handle doctor license (ONLY role 2)
+                if ($user->role == 2) {
+
+                    // ensure clinic_staff exists (for FK constraint)
+                    ClinicStaff::firstOrCreate(
+                        ['user_id' => $user->id],
+                        ['Fname' => '', 'Lname' => '']
+                    );
+
+                    Doctor::updateOrCreate(
+                        ['user_id' => $user->id],
+                        [
+                            'dr_license_no' => $request->dr_license_no,
+                            'ptr_no'        => $request->ptr_no,
+                        ]
+                    );
+                }
         }
 
         return redirect()->route('settings.setting')->with('status', 'profile-updated');

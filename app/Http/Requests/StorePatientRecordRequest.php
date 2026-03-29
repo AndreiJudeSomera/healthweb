@@ -44,26 +44,27 @@ class StorePatientRecordRequest extends FormRequest {
   }public function withValidator($validator)
 {
     $validator->after(function ($validator) {
-        $first  = strtolower(trim($this->first_name));
-        $last   = strtolower(trim($this->last_name));
-        $middle = strtolower(trim($this->middle_name ?? ''));
-        $dob    = $this->date_of_birth;
 
-        // Fetch patients with the same DOB (date_of_birth is not encrypted)
-        $potentialDuplicates = \App\Models\PatientRecord::whereDate('date_of_birth', $dob)->get();
+    $first = trim($this->first_name);
+    $last  = trim($this->last_name);
+    $dob   = $this->date_of_birth;
 
-        foreach ($potentialDuplicates as $patient) {
-            // Decrypt the names for comparison
-            $existingFirst  = strtolower($patient->first_name); // your accessor already decrypts
-            $existingLast   = strtolower($patient->last_name);
-            $existingMiddle = strtolower($patient->middle_name ?? '');
+    $potentialDuplicates = \App\Models\PatientRecord::whereDate('date_of_birth', $dob)->get();
 
-            if ($first === $existingFirst && $last === $existingLast && $middle === $existingMiddle) {
-                $validator->errors()->add('first_name', 'Patient record already exists.');
-                break; // Stop after first match
-            }
+    foreach ($potentialDuplicates as $patient) {
+
+        $existingFirst = trim($patient->first_name);
+        $existingLast  = trim($patient->last_name);
+
+        if (
+            mb_strtolower($first) === mb_strtolower($existingFirst) &&
+            mb_strtolower($last) === mb_strtolower($existingLast)
+        ) {
+            $validator->errors()->add('first_name', 'Patient record already exists.');
+            break;
         }
-    });
+    }
+});
 }
   // protected function prepareForValidation(): void {
   //   // Unchecked checkboxes become false
@@ -74,17 +75,31 @@ class StorePatientRecordRequest extends FormRequest {
   //   }
   // }
   protected function prepareForValidation(): void {
-    $this->merge([
-        'first_name' => strtolower(trim($this->first_name)),
-        'last_name' => strtolower(trim($this->last_name)),
-        'middle_name' => $this->middle_name ? strtolower(trim($this->middle_name)) : null,
+      $this->merge([
+        'first_name' => $this->toSentenceCase($this->first_name),
+        'last_name'  => $this->toSentenceCase($this->last_name),
+        'middle_name' => $this->middle_name ? $this->toSentenceCase($this->middle_name) : null,
     ]);
+    // $this->merge([
+    //     'first_name' => strtolower(trim($this->first_name)),
+    //     'last_name' => strtolower(trim($this->last_name)),
+    //     // 'middle_name' => $this->middle_name ? strtolower(trim($this->middle_name)) : null,
+    // ]);
 
+    
     foreach (['hypertension', 'asthma', 'diabetes', 'thyroid', 'cancer'] as $k) {
         $this->merge([$k => $this->boolean($k)]);
     }
 }
 
+private function toSentenceCase($value)
+{
+    if (!$value) return $value;
+
+    return collect(explode(' ', trim($value)))
+        ->map(fn($word) => ucfirst(strtolower($word)))
+        ->implode(' ');
+}
   public function messages(): array {
     return [
       'date_of_birth.before' => 'Date of birth must be in the past',

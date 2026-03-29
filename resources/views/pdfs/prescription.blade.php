@@ -9,6 +9,7 @@
     .patient-left {
       width: 60%;
       float: left;
+      margin-top:5px;
     }
 
     .patient-right {
@@ -93,7 +94,7 @@
     <div class="patient-line" style="font-size:7px;"><span class="muted">Name :</span> {{ $fullName ?: "—" }}</div>
     <div class="patient-line" style="font-size:7px;"><span class="muted">Age :</span> {{ $age ? $age . " yo" : "—" }}</div>
     <div class="patient-line=" style="font-size:7px;"><span class="muted">Sex :</span> {{ $sex ?: "—" }}</div>
-      <div class="patient-line=" style="font-size:7px;"><span class="muted">Address :</span> {{ $address ?: "—" }}</div>
+      <div class="patient-line=" style="font-size:7px; margin-top:3px;"><span class="muted">Address :</span> {{ $address ?: "—" }}</div>
     </div>
 
     <div class="patient-right">

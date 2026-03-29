@@ -68,7 +68,7 @@ export async function deleteAppointmentModalInit(id) {
 
       if (!res.ok) throw new Error(data.message || "Delete failed");
 
-      toastr.success("Appointment cancelled!");
+      toastr.success("Appointment Deleted!");
       document.querySelector('[data-modal-close="delete-record"]')?.click();
       window.refreshAppointmentsTable?.();
     } catch (err) {
