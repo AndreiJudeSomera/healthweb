@@ -88,7 +88,8 @@
         <div class="flex flex-col gap-1">
           <label class="font-semibold text-sm">USERNAME</label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            type="text" name="username" placeholder="username">
+            type="text" name="username" placeholder="username"  pattern="[A-Za-zÑñ]{3,30}"
+              title="Only letters only, like AndreiSomera" required>
           <p class="hidden text-red-600 text-xs" data-error="username"></p>
         </div>
         <div class="flex flex-col gap-1">
@@ -127,11 +128,12 @@
         <div class="flex flex-col gap-1">
           <label class="font-semibold text-sm">ROLE</label>
           <select class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            name="role">
+            name="role" disabled>
             <option value="0">Patient</option>
             <option value="1">Secretary</option>
             <option value="2">Doctor / Superadmin</option>
           </select>
+          
           <p class="hidden text-red-600 text-xs" data-error="role"></p>
         </div>
         <div class="flex flex-col gap-1">
@@ -143,7 +145,8 @@
         <div class="flex flex-col gap-1">
           <label class="font-semibold text-sm">USERNAME</label>
           <input class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 border-blue-950 focus:ring-blue-950"
-            type="text" name="username">
+            type="text" name="username"pattern="[A-Za-zÑñ]{3,30}"
+              title="Only letters only, like AndreiSomera" required>
           
           <p class="hidden text-red-600 text-xs" data-error="username"></p>
         </div>
@@ -513,7 +516,7 @@
       </form>
     </div>
   </x-modal-garic>
-<!-- 
+
   {{-- ── Secretary Info Modal ──────────────────────────────────────────────── --}}
   <x-modal-garic id="account-secretary-info" title="Secretary Information" maxWidth="max-w-lg">
     <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">
@@ -545,7 +548,7 @@
             name="Address" type="text" required>
         </div>
         <div>
-          <label class="block mb-1 font-semibold text-blue-950/70">SEX</label>
+          <label class="block mb-1 font-semibold text-blue-950/70">SEXs</label>
           <select class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
             name="Gender" required>
             <option value="">— Select —</option>
@@ -566,125 +569,125 @@
         <i class="fa-solid fa-floppy-disk fa-xs me-2"></i>Save
       </button>
     </div>
-  </x-modal-garic> -->
+  </x-modal-garic> 
 
-  {{-- ── Secretary Info Modal ──────────────────────────────────────────────── --}}
-<x-modal-garic id="account-secretary-info" title="Secretary Information" maxWidth="max-w-lg">
+<!--  {{-- ── Secretary Info Modal ──────────────────────────────────────────────── --}}-->
+<!--<x-modal-garic id="account-secretary-info" title="Secretary Information" maxWidth="max-w-lg">-->
 
-  <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">
-    <img class="w-[200px] -my-12" src="{{ asset('assets/images/logo2.png') }}" alt="Logo">
-    <h1 class="font-semibold text-xl">SECRETARY INFORMATION</h1>
-  </div>
+<!--  <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">-->
+<!--    <img class="w-[200px] -my-12" src="{{ asset('assets/images/logo2.png') }}" alt="Logo">-->
+<!--    <h1 class="font-semibold text-xl">SECRETARY INFORMATION</h1>-->
+<!--  </div>-->
 
-  <form class="flex flex-col gap-3 overflow-y-auto max-h-[65vh] text-xs pe-2"
-        id="secretary-info-form">
+<!--  <form class="flex flex-col gap-3 overflow-y-auto max-h-[65vh] text-xs pe-2"-->
+<!--        id="secretary-info-form">-->
 
-    @csrf
-    <input id="secretary_user_id" type="hidden" name="user_id">
+<!--    @csrf-->
+<!--    <input id="secretary_user_id" type="hidden" name="user_id">-->
 
-    <div class="grid grid-cols-3 gap-3">
+<!--    <div class="grid grid-cols-3 gap-3">-->
 
-      {{-- LAST NAME (REQUIRED + PATTERN) --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">LAST NAME *</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="Lname"
-          type="text"
-          required
+<!--      {{-- LAST NAME (REQUIRED + PATTERN) --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">LAST NAME *</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="Lname"-->
+<!--          type="text"-->
+<!--          required-->
           
-          pattern="^[A-Za-zñÑ]{2,100}$"
-          title="Letters only (2–100 characters)">
-      </div>
+<!--          pattern="^[A-Za-zñÑ]{2,100}$"-->
+<!--          title="Letters only (2–100 characters)">-->
+<!--      </div>-->
 
-      {{-- FIRST NAME (REQUIRED + PATTERN) --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">FIRST NAME *</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="Fname"
-          type="text"
-          required
-          pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"
-          title="Letters only (2–100 characters)">
-      </div>
+<!--      {{-- FIRST NAME (REQUIRED + PATTERN) --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">FIRST NAME *</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="Fname"-->
+<!--          type="text"-->
+<!--          required-->
+<!--          pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"-->
+<!--          title="Letters only (2–100 characters)">-->
+<!--      </div>-->
 
-      {{-- MIDDLE NAME (OPTIONAL + PATTERN) --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">MIDDLE NAME</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="Mname"
-          type="text"
-          pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"
-          title="Letters only (2–100 characters)">
-      </div>
+<!--      {{-- MIDDLE NAME (OPTIONAL + PATTERN) --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">MIDDLE NAME</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="Mname"-->
+<!--          type="text"-->
+<!--          pattern="^[A-Za-zñÑ\s'.\-]{2,100}$"-->
+<!--          title="Letters only (2–100 characters)">-->
+<!--      </div>-->
 
-      {{-- DATE OF BIRTH (REQUIRED) --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">BIRTHDATE *</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="DateofBirth"
-          type="date"
-          required>
-      </div>
+<!--      {{-- DATE OF BIRTH (REQUIRED) --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">BIRTHDATE *</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="DateofBirth"-->
+<!--          type="date"-->
+<!--          required>-->
+<!--      </div>-->
 
-      {{-- CONTACT NUMBER (REQUIRED + 11 DIGITS) --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">CONTACT *</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="ContactNumber"
-          type="text"
-          required
-          maxlength="11"
-          inputmode="numeric"
-          pattern="^[0-9]{11}$"
-          title="Must be exactly 11 digits">
-      </div>
+<!--      {{-- CONTACT NUMBER (REQUIRED + 11 DIGITS) --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">CONTACT *</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="ContactNumber"-->
+<!--          type="text"-->
+<!--          required-->
+<!--          maxlength="11"-->
+<!--          inputmode="numeric"-->
+<!--          pattern="^[0-9]{11}$"-->
+<!--          title="Must be exactly 11 digits">-->
+<!--      </div>-->
 
-      {{-- ASSIGNED ID --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">ASSIGNED ID</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="SecAssignedID"
-          type="text">
-      </div>
+<!--      {{-- ASSIGNED ID --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">ASSIGNED ID</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="SecAssignedID"-->
+<!--          type="text">-->
+<!--      </div>-->
 
-      {{-- ADDRESS --}}
-      <div class="col-span-2">
-        <label class="block mb-1 font-semibold text-blue-950/70">ADDRESS</label>
-        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="Address"
-          type="text"
-          required>
-      </div>
+<!--      {{-- ADDRESS --}}-->
+<!--      <div class="col-span-2">-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">ADDRESS</label>-->
+<!--        <input class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="Address"-->
+<!--          type="text"-->
+<!--          required>-->
+<!--      </div>-->
 
-      {{-- SEX --}}
-      <div>
-        <label class="block mb-1 font-semibold text-blue-950/70">SEX</label>
-        <select class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"
-          name="Gender"
-          required>
-          <option value="">— Select —</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      </div>
+<!--      {{-- SEX --}}-->
+<!--      <div>-->
+<!--        <label class="block mb-1 font-semibold text-blue-950/70">SEX</label>-->
+<!--        <select class="w-full p-1.5 border border-blue-950/30 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-950 text-xs"-->
+<!--          name="Gender"-->
+<!--          required>-->
+<!--          <option value="">— Select —</option>-->
+<!--          <option value="Male">Male</option>-->
+<!--          <option value="Female">Female</option>-->
+<!--        </select>-->
+<!--      </div>-->
 
-    </div>
-  </form>
+<!--    </div>-->
+<!--  </form>-->
 
-  {{-- ACTION BUTTONS --}}
-  <div class="mt-4 flex justify-end gap-2">
-    <button class="px-6 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-600/90"
-      data-modal-close="account-secretary-info" type="button">
-      Cancel
-    </button>
+<!--  {{-- ACTION BUTTONS --}}-->
+<!--  <div class="mt-4 flex justify-end gap-2">-->
+<!--    <button class="px-6 py-2 bg-gray-600 text-gray-100 rounded-md hover:bg-gray-600/90"-->
+<!--      data-modal-close="account-secretary-info" type="button">-->
+<!--      Cancel-->
+<!--    </button>-->
 
-    <button class="px-6 py-2 bg-blue-950 text-blue-100 rounded-md hover:bg-blue-950/90"
-      type="submit" form="secretary-info-form">
-      <i class="fa-solid fa-floppy-disk fa-xs me-2"></i>Save
-    </button>
-  </div>
+<!--    <button class="px-6 py-2 bg-blue-950 text-blue-100 rounded-md hover:bg-blue-950/90"-->
+<!--      type="submit" form="secretary-info-form">-->
+<!--      <i class="fa-solid fa-floppy-disk fa-xs me-2"></i>Save-->
+<!--    </button>-->
+<!--  </div>-->
 
-</x-modal-garic>
+<!--</x-modal-garic>-->
   {{-- ── Role Filter Modal ──────────────────────────────────────────────────── --}}
   <x-modal-garic id="account-role-filter" title="Filter by Role" maxWidth="max-w-[380px]">
     <div class="w-full flex flex-col items-center justify-center gap-6 mb-4">

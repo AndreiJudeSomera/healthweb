@@ -52,7 +52,15 @@ public function store(Request $request)
     $validator = Validator::make($request->all(), [
         'role' => 'required|in:0,1,2',
         'email' => 'required|email|unique:users,email',
-        'username' => 'required|string|unique:users,username',
+        // 'username' => 'required|string|unique:users,username',
+        'username' => [
+                        'required',
+                        'string',
+                        'min:3',
+                        'max:30',
+                        'regex:/^[A-Za-zÑñ]+$/',
+                        'unique:users,username'
+                    ],
         'password' => 'required|string|min:6|confirmed',
 
         'patient_type' => 'nullable|in:new,old',
@@ -116,9 +124,15 @@ public function store(Request $request)
     $user = User::findOrFail($id);
 
     $validator = Validator::make($request->all(), [
-      'role' => 'required|in:0,1,2',
+    //   'role' => 'required|in:0,1,2',
       'email' => 'required|email|unique:users,email,' . $id,
-      'username' => 'required|string|unique:users,username,' . $id,
+    //   'username' => 'required|string|unique:users,username,' . $id,
+      'username' => [
+            'required',
+            'string',
+            'regex:/^[A-Za-zÑñ]{3,30}$/',
+            'unique:users,username,' . $id,
+        ],
       'password' => 'nullable|string|min:6|confirmed',
     ]);
 
@@ -127,7 +141,7 @@ public function store(Request $request)
       return response()->json(['errors' => $validator->errors()], 422);
     }
 
-    $user->role = $request->role;
+    // $user->role = $request->role;
     $user->email = $request->email;
     $user->username = $request->username;
     $user->is_active = $request->boolean('is_active');
@@ -492,6 +506,8 @@ private function toSentenceCase($value)
 
     return response()->json(['message' => 'Secretary information updated successfully.']);
   }
+
+  
 
   public function storePatientInfo(Request
    $request) {

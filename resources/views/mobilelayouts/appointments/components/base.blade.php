@@ -1,46 +1,29 @@
 
 @php
   $statusFilters = ['', 'pending', 'approved', 'completed', 'cancelled'];
- 
+  $typeFilters   = ['', 'consultation', 'follow-up', 'prescription', 'medical-certificate', 'referral-letter', 'other'];
 @endphp
 
 <div
   x-data="{
     search: '',
- 
-    statusFilter: 'all',
+    statusFilter: '', 
+    typeFilter: '',
+    cancelUrlTemplate: '{{ route('appointments.cancel', ['id' => '__ID__']) }}',
     appointments: {{ Js::from($appointments) }},
-     cancelUrlTemplate: '{{ route('appointments.cancel', ['id' => '__ID__']) }}',
     get filtered() {
-  const s = this.search.toLowerCase().trim()
-
-  return this.appointments
-    .filter(a => {
-
-      const status = (a.status || '').toLowerCase().trim()
-
-      const matchSearch =
-        !s ||
-        (a.appointment_type || '').toLowerCase().includes(s) ||
-        (a.appointment_date || '').includes(s) ||
-        status.includes(s)
-
-      const matchStatus =
-        this.statusFilter === 'all' ||
-        !this.statusFilter ||
-        status === this.statusFilter
-
-      return matchSearch && matchStatus
-    })
-    .sort((a, b) => {
-      // Combine date + time for accurate sorting
-      const dateA = new Date(a.appointment_date + 'T' + (a.appointment_time || '00:00:00'))
-      const dateB = new Date(b.appointment_date + 'T' + (b.appointment_time || '00:00:00'))
-
-      return dateB - dateA // DESCENDING (latest first)
-    })
-},
-  cancel(id) {
+      const s = this.search.toLowerCase();
+      return this.appointments.filter(a => {
+        const matchSearch = !s
+          || a.appointment_type?.toLowerCase().includes(s)
+          || a.appointment_date?.includes(s)
+          || a.status?.toLowerCase().includes(s);
+        const matchStatus = !this.statusFilter || a.status?.toLowerCase() === this.statusFilter;
+        const matchType   = !this.typeFilter   || a.appointment_type?.toLowerCase() === this.typeFilter;
+        return matchSearch && matchStatus && matchType;
+      });
+    },
+    cancel(id) {
   if (!confirm('Are you sure you want to cancel this appointment?')) return;
 
   const csrf = document.querySelector('meta[name=csrf-token]')?.content;
@@ -84,7 +67,7 @@ window.location.reload();
       class="flex items-center gap-2 px-3 py-2.5 rounded-md border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium transition-colors">
       <i class="fa-solid fa-sliders fa-sm"></i>
       <span class="hidden sm:inline">Filter</span>
-      <span x-show="statusFilter"
+      <span x-show="statusFilter || typeFilter"
         class="w-2 h-2 rounded-full bg-blue-950 inline-block"></span>
     </button>
 
@@ -97,7 +80,7 @@ window.location.reload();
 
   {{-- Active filter chips --}}
   <div class="flex flex-wrap gap-2 mb-3">
-    <template x-if="statusFilter !== 'all'">
+    <template x-if="statusFilter">
       <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
         <span x-text="statusFilter.toUpperCase()"></span>
         <button @click="statusFilter = ''; window.filterAppointmentsByStatus?.('')" class="hover:text-blue-950">
@@ -105,7 +88,14 @@ window.location.reload();
         </button>
       </span>
     </template>
-   
+    <template x-if="typeFilter">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+        <span x-text="typeFilter.toUpperCase()"></span>
+        <button @click="typeFilter = ''; window.filterAppointmentsByType?.('')" class="hover:text-blue-950">
+          <i class="fa-solid fa-xmark fa-xs"></i>
+        </button>
+      </span>
+    </template>
   </div>
 
   {{-- List --}}
@@ -172,11 +162,11 @@ window.location.reload();
   </div>
 
   {{-- Status --}}
-  <div class="flex flex-col gap-1" >
+  <div class="flex flex-col gap-1" x-data="{ get active() { return $root.statusFilter ?? '' } }">
     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1 mb-1">Status</p>
     @php
       $statusOpts = [
-        ['label' => 'All',       'value' => 'all',          'badge' => 'bg-gray-100 text-gray-700',      'icon' => 'fa-solid fa-layer-group'],
+        ['label' => 'All',       'value' => '',          'badge' => 'bg-gray-100 text-gray-700',      'icon' => 'fa-solid fa-layer-group'],
         ['label' => 'Pending',   'value' => 'pending',   'badge' => 'bg-amber-100 text-amber-800',    'icon' => 'fa-solid fa-clock'],
         ['label' => 'Approved',  'value' => 'approved',  'badge' => 'bg-emerald-100 text-emerald-800','icon' => 'fa-solid fa-circle-check'],
         ['label' => 'Completed', 'value' => 'completed', 'badge' => 'bg-blue-100 text-blue-800',      'icon' => 'fa-solid fa-clipboard-check'],
@@ -186,21 +176,50 @@ window.location.reload();
     @foreach ($statusOpts as $opt)
       <button type="button"
         class="w-full flex items-center justify-between px-4 py-3 rounded-lg border transition-colors"
-        :class="statusFilter === '{{ $opt['value'] }}'.toString()
+        :class="$root.statusFilter === '{{ $opt['value'] }}'
           ? 'border-blue-950 bg-blue-950/5 text-blue-950'
           : 'border-transparent hover:bg-gray-50 text-gray-700'"
-      @click="statusFilter = '{{ $opt['value'] }}'.toString(); window.Modal?.close('appointment-filter')">
+        @click="$root.statusFilter = '{{ $opt['value'] }}'; window.Modal?.close('appointment-filter')">
         <div class="flex items-center gap-3">
           <i class="{{ $opt['icon'] }} fa-sm w-4 text-center"></i>
           <span class="px-2 py-0.5 rounded text-xs font-semibold {{ $opt['badge'] }}">{{ $opt['label'] }}</span>
         </div>
-       <i class="fa-solid fa-check fa-sm text-blue-950 transition-opacity opacity-0"
-        :class="statusFilter === '{{ $opt['value'] }}'.toString() ? '!opacity-100' : ''">
-      </i>
+        <i class="fa-solid fa-check fa-sm text-blue-950 transition-opacity"
+          :class="$root.statusFilter === '{{ $opt['value'] }}' ? 'opacity-100' : 'opacity-0'"></i>
       </button>
     @endforeach
   </div>
 
- 
+  <hr class="my-3 border-gray-100">
 
+  {{-- Type --}}
+  <div class="flex flex-col gap-1">
+    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide px-1 mb-1">Appointment Type</p>
+    @php
+      $typeOpts = [
+        ['label' => 'All',                 'value' => '',                   'badge' => 'bg-gray-100 text-gray-700',      'icon' => 'fa-solid fa-layer-group'],
+        ['label' => 'Consultation',        'value' => 'consultation',       'badge' => 'bg-blue-100 text-blue-800',      'icon' => 'fa-solid fa-stethoscope'],
+        ['label' => 'Follow-up',           'value' => 'follow-up',          'badge' => 'bg-teal-100 text-teal-800',      'icon' => 'fa-solid fa-rotate-right'],
+        ['label' => 'Prescription',        'value' => 'prescription',       'badge' => 'bg-purple-100 text-purple-800',  'icon' => 'fa-solid fa-pills'],
+        ['label' => 'Medical Certificate', 'value' => 'medical-certificate','badge' => 'bg-emerald-100 text-emerald-800','icon' => 'fa-solid fa-notes-medical'],
+        ['label' => 'Referral Letter',     'value' => 'referral-letter',    'badge' => 'bg-amber-100 text-amber-800',    'icon' => 'fa-solid fa-user-doctor'],
+        ['label' => 'Other',               'value' => 'other',              'badge' => 'bg-gray-100 text-gray-700',      'icon' => 'fa-solid fa-ellipsis'],
+      ];
+    @endphp
+    @foreach ($typeOpts as $opt)
+      <button type="button"
+        class="w-full flex items-center justify-between px-4 py-3 rounded-lg border transition-colors"
+        :class="$root.typeFilter === '{{ $opt['value'] }}'
+          ? 'border-blue-950 bg-blue-950/5 text-blue-950'
+          : 'border-transparent hover:bg-gray-50 text-gray-700'"
+        @click="$root.typeFilter = '{{ $opt['value'] }}'; window.Modal?.close('appointment-filter')">
+        <div class="flex items-center gap-3">
+          <i class="{{ $opt['icon'] }} fa-sm w-4 text-center"></i>
+          <span class="px-2 py-0.5 rounded text-xs font-semibold {{ $opt['badge'] }}">{{ $opt['label'] }}</span>
+        </div>
+        <i class="fa-solid fa-check fa-sm text-blue-950 transition-opacity"
+          :class="$root.typeFilter === '{{ $opt['value'] }}' ? 'opacity-100' : 'opacity-0'"></i>
+      </button>
+    @endforeach
+  </div>
 </x-modal-garic>
