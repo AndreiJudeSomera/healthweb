@@ -164,7 +164,7 @@ Route::middleware(['auth'])->group(function () {
         [ConsultationPdfController::class, 'consultationDocument']
     )->whereNumber('id');
 
- Route::delete('/appointments/cacel/{id}', [AppointmentController::class, 'cancel'])->whereNumber('id')->name('appointments.cancel');
+//  Route::delete('/appointments/cacel/{id}', [AppointmentController::class, 'cancel'])->whereNumber('id')->name('appointments.cancel');
      Route::delete('/appointments/{id}', [AppointmentController::class, 'destroy'])->whereNumber('id')->name('appointments.destroy');
 });
 // Staff: secretary + superadmin (GARIC ops)
